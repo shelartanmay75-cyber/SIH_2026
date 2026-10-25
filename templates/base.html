@@ -8,7 +8,11 @@
   {% block csrf_meta %}<meta name="csrf-token" content="{{ csrf_token() }}">{% endblock %}
   <meta name="nexus-api-routes" content="{{ ui_paths|default([])|list|sort|tojson|forceescape }}">
   <title>{% block title %}APAARSetu{% endblock %}</title>
-  <link rel="icon" href="data:,">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/favicon-180.png') }}">
+  <meta name="theme-color" content="#05255e">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   {% block head %}{% endblock %}
 </head>
