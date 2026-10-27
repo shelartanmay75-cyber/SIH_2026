@@ -354,6 +354,19 @@ def get_summary(
         .all()
     )
     category_breakdown = {cat: count for cat, count in cat_query}
+    for cat in ("OPEN", "OBC", "SC", "ST", "NRI", "OCI", "FN"):
+        if cat not in category_breakdown:
+            category_breakdown[cat] = 0
+
+    category_quotas = {
+        "OPEN": 90,
+        "OBC": 50,
+        "SC": 24,
+        "ST": 16,
+        "NRI": 6,
+        "OCI": 5,
+        "FN": 4,
+    }
 
     return {
         "institution_id": institution_id,
@@ -369,6 +382,7 @@ def get_summary(
         "supernumerary_utilisation_pct": sup_utilisation_pct,
         "warning_level": warning_level,
         "category_breakdown": category_breakdown,
+        "category_quotas": category_quotas,
     }
 
 

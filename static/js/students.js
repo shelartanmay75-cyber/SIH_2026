@@ -98,7 +98,8 @@
         submitBtn.textContent = "Saving...";
 
         const categoryVal = document.getElementById("add-student-category")?.value || "OPEN";
-        const classificationVal = (categoryVal === "SUPERNUMERARY") ? "SUPERNUMERARY" : "REGULAR";
+        const isSuperCat = ["SUPERNUMERARY", "NRI", "OCI", "FN"].includes(categoryVal);
+        const classificationVal = isSuperCat ? "SUPERNUMERARY" : "REGULAR";
         const todayStr = new Date().toISOString().split("T")[0];
 
         const payload = {
@@ -112,9 +113,9 @@
           classification: classificationVal,
           admission_date: todayStr,
           enrolment_status: "ACTIVE",
-          is_nri: (categoryVal === "SUPERNUMERARY"),
-          is_oci: false,
-          is_foreign_national: false,
+          is_nri: (categoryVal === "NRI" || categoryVal === "SUPERNUMERARY"),
+          is_oci: (categoryVal === "OCI"),
+          is_foreign_national: (categoryVal === "FN"),
           contact_ref: null,
           fee_payer_ref: null
         };
@@ -224,7 +225,7 @@
           <td><span title="${window.Nexus.escapeHTML(st.institution_name)}">${window.Nexus.escapeHTML(st.institution_code || '—')}</span></td>
           <td><span title="${window.Nexus.escapeHTML(st.programme_name)}">${window.Nexus.escapeHTML(st.programme_code || '—')}</span></td>
           <td>${window.Nexus.escapeHTML(st.academic_year)}</td>
-          <td><span class="badge ${isSuper ? 'badge-warn' : 'badge-info'}">${window.Nexus.escapeHTML(isSuper ? 'Supernumerary' : 'Open (Regular)')}</span></td>
+          <td><span class="badge ${isSuper ? 'badge-warn' : 'badge-info'}" title="${isSuper ? 'Supernumerary Quota' : 'Regular Intake'}">${window.Nexus.escapeHTML(st.admission_category || (isSuper ? 'Supernumerary' : 'OPEN'))}</span></td>
           <td><span class="badge badge-${valVariant}">${window.Nexus.escapeHTML(st.validation_status)}</span></td>
           <td><span class="badge badge-${enrolVariant}">${window.Nexus.escapeHTML(st.enrolment_status)}</span></td>
           <td style="text-align: right;">

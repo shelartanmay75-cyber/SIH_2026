@@ -112,7 +112,7 @@ def students_page():
         current_institution_id=current_user.institution_id,
         institutions=institutions,
         programmes=programmes,
-        categories=[AdmissionCategory.OPEN.value, AdmissionCategory.SUPERNUMERARY.value],
+        categories=[c.value for c in AdmissionCategory],
         classifications=[c.value for c in Classification],
         statuses=[s.value for s in EnrolmentStatus]
     )
@@ -152,7 +152,7 @@ def student_detail_page(id: str):
         can_edit=can_edit,
         can_reveal=can_reveal,
         programmes=programmes,
-        categories=[AdmissionCategory.OPEN.value, AdmissionCategory.SUPERNUMERARY.value],
+        categories=[c.value for c in AdmissionCategory],
         classifications=[c.value for c in Classification],
         statuses=[s.value for s in EnrolmentStatus]
     )

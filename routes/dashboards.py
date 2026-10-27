@@ -194,21 +194,34 @@ def get_institution_dashboard():
 
     warning_level = calculate_warning_level(regular_utilisation_pct)
 
-    # Category-wise capacity and admitted breakdown (Open Regular vs Supernumerary)
-    category_wise_capacity = {
-        "OPEN": {
-            "category": "Open (Regular)",
-            "admitted": regular_admitted,
-            "capacity": approved_regular,
-            "utilisation_pct": regular_utilisation_pct
-        },
-        "SUPERNUMERARY": {
-            "category": "Supernumerary",
-            "admitted": supernumerary_admitted,
-            "capacity": supernumerary_capacity,
-            "utilisation_pct": supernumerary_utilisation_pct
-        }
+    # Category-wise capacity and admitted breakdown for all standard categories
+    num_progs = len(capacities) if capacities else 1
+    cat_quotas_per_prog = {
+        "OPEN": {"capacity": 90, "name": "OPEN", "classification": "REGULAR"},
+        "OBC": {"capacity": 50, "name": "OBC", "classification": "REGULAR"},
+        "SC": {"capacity": 24, "name": "SC", "classification": "REGULAR"},
+        "ST": {"capacity": 16, "name": "ST", "classification": "REGULAR"},
+        "NRI": {"capacity": 6, "name": "NRI Category", "classification": "SUPERNUMERARY"},
+        "OCI": {"capacity": 5, "name": "OCI Status", "classification": "SUPERNUMERARY"},
+        "FN": {"capacity": 4, "name": "Foreign National (FN)", "classification": "SUPERNUMERARY"},
     }
+
+    category_wise_capacity = {}
+    for cat_code, cat_info in cat_quotas_per_prog.items():
+        cat_cap = cat_info["capacity"] * num_progs
+        cat_adm = stud_query.filter(
+            StudentRecord.admission_category == cat_code,
+            StudentRecord.enrolment_status.in_(active_statuses)
+        ).count()
+        cat_util = round((cat_adm / cat_cap * 100), 1) if cat_cap > 0 else 0.0
+        category_wise_capacity[cat_code] = {
+            "category": cat_info["name"],
+            "classification": cat_info["classification"],
+            "admitted": cat_adm,
+            "capacity": cat_cap,
+            "remaining": max(0, cat_cap - cat_adm),
+            "utilisation_pct": cat_util
+        }
 
     # 2. Submission History (last 10)
     submissions = (
