@@ -8,11 +8,10 @@
   {% block csrf_meta %}<meta name="csrf-token" content="{{ csrf_token() }}">{% endblock %}
   <meta name="nexus-api-routes" content="{{ ui_paths|default([])|list|sort|tojson|forceescape }}">
   <title>{% block title %}APAARSetu{% endblock %}</title>
-  <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32.png') }}">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16.png') }}">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='img/favicon-180.png') }}">
-  <meta name="theme-color" content="#05255e">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   {% block head %}{% endblock %}
 </head>
@@ -21,9 +20,22 @@
   <div class="tricolour" aria-hidden="true"><span></span><span></span><span></span></div>
   {% if signed_in and self.shell()|trim != 'public-shell' %}
     <aside class="sidebar" aria-label="Application sidebar">
+<<<<<<< HEAD
       <div class="brand"><span style="color: #ffffff;">APAAR</span><span style="color: #48bb78;">Setu</span><small>Student data management</small></div>
       <button class="sidebar-menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar-menu">Menu</button>
       <nav id="sidebar-menu" aria-label="Main navigation">{{ navigation(current_user.role, ui_paths|default([])) }}</nav>
+=======
+      <div class="brand" style="display: flex; align-items: center; gap: 12px; padding: 0 10px 22px;">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="APAARSetu Logo" style="width: 40px; height: 40px; border-radius: 9px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.3); flex-shrink: 0;">
+        <div style="min-width: 0;">
+          <div class="brand-bordered brand-bordered-dark" style="font-size: 1.35rem; line-height: 1.1;">
+            <span class="brand-apaar">APAAR</span><span class="brand-setu">Setu</span>
+          </div>
+          <small style="color: #d9e4f2; font-size: 0.74rem; display: block; margin-top: 2px;">Academic Registry</small>
+        </div>
+      </div>
+      <nav aria-label="Main navigation">{{ navigation(current_user.role, ui_paths|default([])) }}</nav>
+>>>>>>> source/main
       {% if is_ui_preview|default(false) %}<p class="sidebar-note">Development preview.<br>Unbuilt modules are unavailable.</p>{% endif %}
     </aside>
   {% endif %}

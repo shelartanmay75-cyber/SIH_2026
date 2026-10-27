@@ -1,6 +1,6 @@
 {% extends 'base_public.html' %}
 {% block title %}Shared Academic Verification — APAARSetu{% endblock %}
-{% block page_title %}Shared Academic Verification{% endblock %}
+{% block page_title %}<span class="brand-text" style="display: inline-flex; align-items: center; gap: 8px;"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 24px; height: 24px; border-radius: 6px; object-fit: contain; vertical-align: middle;"> Shared Academic Verification</span>{% endblock %}
 {% block topbar_identity %}<span>Student-controlled disclosure</span>{% endblock %}
 {% block csrf_meta %}{% endblock %}
 {% block toast_messages %}{% endblock %}

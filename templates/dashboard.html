@@ -10,10 +10,23 @@
 
 <section id="governance-screen" data-mode="{{ 'governance' if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] else 'institution' }}" data-institution="{{ current_user.institution_id or '' }}">
 
-  <div class="dash-header-row">
+  <div class="dash-header-row" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
     <div>
-      <h1 class="dash-page-title">{{ 'Academic Governance Overview' if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] else 'Institution Operations Overview' }}</h1>
-      <p class="muted dash-page-subtitle">Real-time academic records, seat utilisation, and risk indicators.</p>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px;">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 28px; height: 28px; border-radius: 7px; object-fit: contain; box-shadow: 0 2px 6px rgba(0,0,0,0.12);">
+        <span class="brand-bordered" style="font-size: 1.35rem;">
+          <span class="brand-apaar">APAAR</span><span class="brand-setu">Setu</span>
+        </span>
+        <span class="badge badge-info" style="font-size: 0.74rem; font-weight: 700; letter-spacing: 0.5px;">
+          {{ 'NATIONAL REGULATORY CONSOLE' if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] else (current_user.username ~ ' INSTITUTION PORTAL') }}
+        </span>
+      </div>
+      <h1 class="dash-page-title" style="font-size: 1.55rem; font-weight: 750; margin: 0;">{{ 'Academic Governance Overview' if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] else 'Institution Operations Overview' }}</h1>
+      <p class="muted dash-page-subtitle" style="margin-top: 4px;">Real-time academic records, seat utilisation, and risk indicators.</p>
+    </div>
+    <div style="background: var(--surface); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+      <span style="width: 8px; height: 8px; border-radius: 50%; background: #16a34a; display: inline-block;"></span>
+      <span>Scope: <strong>{{ 'All Approved Institutions' if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] else current_user.username }}</strong></span>
     </div>
   </div>
 

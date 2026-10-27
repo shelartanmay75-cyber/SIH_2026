@@ -20,21 +20,51 @@
     flex-direction: column;
     gap: 32px;
   }
-  @keyframes spinChakra {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
+  @keyframes centerPopPulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 34px rgba(14, 165, 233, 0.55));
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 30px rgba(56, 189, 248, 1)) drop-shadow(0 0 58px rgba(14, 165, 233, 0.8));
+      transform: scale(1.06);
+    }
   }
-  .hero-chakra-wrap {
+  @keyframes radarAuraRipple {
+    0% { transform: scale(0.9); opacity: 0.75; }
+    50% { transform: scale(1.22); opacity: 0.2; }
+    100% { transform: scale(0.9); opacity: 0.75; }
+  }
+  @keyframes nodesAmbientPulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 1; }
+  }
+  .hero-network-wrap {
     position: absolute;
     top: 50%;
-    left: 45%;
-    width: 580px;
+    left: 48%;
+    width: 960px;
+    max-width: 135%;
     height: 580px;
     transform: translate(-50%, -50%);
-    opacity: 0.13;
     pointer-events: none;
     z-index: 1;
+<<<<<<< HEAD
     animation: none;
+=======
+    overflow: visible;
+  }
+  .network-center-hub {
+    transform-origin: 490px 300px;
+    animation: centerPopPulse 3.8s ease-in-out infinite;
+  }
+  .network-radar-ring {
+    transform-origin: 490px 300px;
+    animation: radarAuraRipple 4.5s ease-in-out infinite;
+  }
+  .network-nodes-group {
+    animation: nodesAmbientPulse 5s ease-in-out infinite;
+>>>>>>> source/main
   }
   .nav-pill-btn {
     display: inline-flex;
@@ -122,10 +152,14 @@
   {# Top Navbar (Inspired by PM-AJAY Gov Platform Layout) #}
   <header class="card" style="padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); width: 100%;">
     <div style="display: flex; align-items: center; gap: 16px;">
+<<<<<<< HEAD
       <img src="{{ url_for('static', filename='img/favicon-180.png') }}" width="48" height="48" alt="" style="border-radius: 10px;">
+=======
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="APAARSetu Logo" style="width: 48px; height: 48px; border-radius: 12px; object-fit: contain; box-shadow: 0 3px 10px rgba(14,36,68,0.25);">
+>>>>>>> source/main
       <div>
-        <div style="font-size: 1.4rem; font-weight: 800; line-height: 1.2;">
-          <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span> Platform
+        <div class="brand-bordered" style="font-size: 1.55rem; line-height: 1.2;">
+          <span class="brand-apaar">APAAR</span><span class="brand-setu">Setu</span>&nbsp;<span style="font-size: 1.15rem; font-weight: 700; color: #1e293b;">Platform</span>
         </div>
         <div style="font-size: 0.8rem; color: #64748b; font-weight: 500;">Synthetic academic governance prototype</div>
       </div>
@@ -144,6 +178,10 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         How it works
       </a>
+      <a href="#security" class="nav-pill-btn nav-pill-ghost">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Security &amp; Crypto
+      </a>
       <a href="#demo-access" class="nav-pill-btn nav-pill-ghost">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Demo Roles
@@ -154,8 +192,13 @@
     </nav>
   </header>
 
+<<<<<<< HEAD
   {# Hero Banner with Full-Width Indian Tricolour Gradient, Rotating Ashoka Chakra, and Image 2 Card on Right #}
   <div id="home" style="position: relative; overflow: hidden; border-radius: 10px; width: 100%; background: var(--navy-dark); border: 1px solid var(--navy);">
+=======
+  {# Hero Banner with Central Academic Identity Network & Glowing Graduation Cap Hub #}
+  <div id="home" style="position: relative; overflow: hidden; border-radius: 18px; width: 100%; background: radial-gradient(circle at 49% 48%, rgba(14, 165, 233, 0.24) 0%, transparent 46%), radial-gradient(ellipse at 10% 15%, rgba(255, 140, 0, 0.22) 0%, transparent 45%), radial-gradient(ellipse at 88% 85%, rgba(19, 136, 8, 0.22) 0%, transparent 45%), linear-gradient(135deg, #061325 0%, #0a1e3a 50%, #08172d 100%); border: 1px solid #1e293b; box-shadow: 0 14px 40px rgba(6, 19, 37, 0.45);">
+>>>>>>> source/main
 
     {# Top Subtle 4px Indian Tricolour Accent Strip #}
     <div style="height: 4px; width: 100%; display: flex; position: absolute; top: 0; left: 0; right: 0; z-index: 3;">
@@ -164,16 +207,204 @@
       <span style="flex: 1; background: #138808;"></span>
     </div>
 
-    {# Rotating Ashoka Chakra Watermark SVG (24 Spokes, Authentic Geometry) #}
-    <div class="hero-chakra-wrap" aria-hidden="true">
-      <svg viewBox="0 0 200 200" width="100%" height="100%" fill="none" stroke="#93c5fd">
-        <circle cx="100" cy="100" r="92" stroke="#93c5fd" stroke-width="4.5" fill="none" />
-        <circle cx="100" cy="100" r="16" fill="#93c5fd" />
-        <circle cx="100" cy="100" r="6" fill="#07152b" />
-        {% for deg in [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345] %}
-        <line x1="100" y1="16" x2="100" y2="92" stroke="#93c5fd" stroke-width="2.4" stroke-linecap="round" transform="rotate({{ deg }} 100 100)" />
-        <circle cx="100" cy="7.5" r="2.2" fill="#93c5fd" transform="rotate({{ deg + 7.5 }} 100 100)" />
-        {% endfor %}
+    {# Academic Identity Network Constellation with Glowing Center Graduation Cap Hub #}
+    <div class="hero-network-wrap" aria-hidden="true">
+      <svg viewBox="0 0 1000 600" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Center Glowing Cyan Radial Gradient -->
+          <radialGradient id="hubRadial" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#0e3666" />
+            <stop offset="70%" stop-color="#081e3a" />
+            <stop offset="100%" stop-color="#041022" />
+          </radialGradient>
+          <!-- Glow Filter for Center Hub -->
+          <filter id="centerPopGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur2" />
+            <feMerge>
+              <feMergeNode in="blur2" />
+              <feMergeNode in="blur1" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <!-- Soft Glow Filter for Nodes -->
+          <filter id="nodeSoftGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <!-- Node Background Radial -->
+          <radialGradient id="nodeBg" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#0d284f" />
+            <stop offset="100%" stop-color="#071830" />
+          </radialGradient>
+        </defs>
+
+        <!-- Ambient Center Light Flare -->
+        <circle cx="490" cy="300" r="140" fill="url(#hubRadial)" opacity="0.65" />
+        <circle cx="490" cy="300" r="180" fill="#38bdf8" opacity="0.08" filter="url(#nodeSoftGlow)" />
+
+        <!-- Network Connecting Lines with Cyan Glow -->
+        <g stroke="rgba(56, 189, 248, 0.42)" stroke-width="1.8" stroke-linecap="round">
+          <!-- Radiating lines from Center Hub (490, 300) -->
+          <line x1="490" y1="300" x2="360" y2="150" />
+          <line x1="490" y1="300" x2="490" y2="165" />
+          <line x1="490" y1="300" x2="620" y2="165" />
+          <line x1="490" y1="300" x2="600" y2="300" />
+          <line x1="490" y1="300" x2="620" y2="430" />
+          <line x1="490" y1="300" x2="490" y2="465" />
+          <line x1="490" y1="300" x2="370" y2="425" />
+          <line x1="490" y1="300" x2="370" y2="280" />
+
+          <!-- Secondary Cross-Mesh Lines -->
+          <line x1="360" y1="150" x2="490" y2="165" stroke-dasharray="3 3" opacity="0.7" />
+          <line x1="490" y1="165" x2="620" y2="165" stroke-dasharray="3 3" opacity="0.7" />
+          <line x1="620" y1="165" x2="720" y2="225" />
+          <line x1="620" y1="165" x2="600" y2="300" />
+          <line x1="600" y1="300" x2="710" y2="365" />
+          <line x1="600" y1="300" x2="620" y2="430" stroke-dasharray="3 3" opacity="0.7" />
+          <line x1="620" y1="430" x2="490" y2="465" />
+          <line x1="490" y1="465" x2="370" y2="425" stroke-dasharray="3 3" opacity="0.7" />
+          <line x1="370" y1="425" x2="370" y2="280" />
+          <line x1="370" y1="280" x2="360" y2="150" />
+          <line x1="360" y1="150" x2="265" y2="225" />
+          <line x1="370" y1="280" x2="265" y2="225" stroke-dasharray="3 3" opacity="0.7" />
+          <line x1="370" y1="425" x2="330" y2="500" opacity="0.5" />
+          <line x1="620" y1="430" x2="690" y2="480" opacity="0.5" />
+          <line x1="720" y1="225" x2="710" y2="365" stroke-dasharray="3 3" opacity="0.6" />
+        </g>
+
+        <!-- Constellation Star / Micro Nodes -->
+        <g fill="#38bdf8" filter="url(#nodeSoftGlow)">
+          <circle cx="300" cy="115" r="3" opacity="0.7" />
+          <line x1="300" y1="115" x2="360" y2="150" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" />
+          <circle cx="560" cy="115" r="2.5" opacity="0.6" />
+          <line x1="560" y1="115" x2="490" y2="165" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" />
+          <circle cx="770" cy="275" r="3" opacity="0.8" />
+          <line x1="770" y1="275" x2="720" y2="225" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" />
+          <circle cx="690" cy="480" r="3" opacity="0.7" />
+          <circle cx="330" cy="500" r="3" opacity="0.7" />
+          <circle cx="215" cy="300" r="2.5" opacity="0.6" />
+          <line x1="215" y1="300" x2="265" y2="225" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1" />
+        </g>
+
+        <!-- Outer Nodes Group -->
+        <g class="network-nodes-group">
+          <!-- Node 1: Academic Certificate / Document (Top Left: 360, 150) -->
+          <g transform="translate(360, 150)">
+            <circle cx="0" cy="0" r="26" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="2" />
+            <rect x="-8" y="-11" width="16" height="22" rx="2" fill="none" stroke="#7dd3fc" stroke-width="1.6" />
+            <line x1="-5" y1="-5" x2="5" y2="-5" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <line x1="-5" y1="-1" x2="5" y2="-1" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <line x1="-5" y1="3" x2="1" y2="3" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <circle cx="3" cy="5" r="2.5" fill="#38bdf8" />
+          </g>
+
+          <!-- Node 2: QR Code Verification (Top Mid: 490, 165) -->
+          <g transform="translate(490, 165)">
+            <circle cx="0" cy="0" r="22" fill="url(#nodeBg)" stroke="#0ea5e9" stroke-width="1.8" />
+            <rect x="-8" y="-8" width="6" height="6" rx="1" fill="#7dd3fc" />
+            <rect x="2" y="-8" width="6" height="6" rx="1" fill="#7dd3fc" />
+            <rect x="-8" y="2" width="6" height="6" rx="1" fill="#7dd3fc" />
+            <rect x="3" y="3" width="2.5" height="2.5" fill="#7dd3fc" />
+            <rect x="6" y="6" width="2.5" height="2.5" fill="#7dd3fc" />
+          </g>
+
+          <!-- Node 3: Security Shield (Top Right: 620, 165) -->
+          <g transform="translate(620, 165)">
+            <circle cx="0" cy="0" r="25" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="2" />
+            <path d="M -8,-9 L 8,-9 C 8,3 0,11 0,11 C 0,11 -8,3 -8,-9 Z" fill="rgba(56,189,248,0.2)" stroke="#7dd3fc" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M -4,0 L -1,3 L 4,-3" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <!-- Node 4: QR Code (Upper Far Right: 720, 225) -->
+          <g transform="translate(720, 225)">
+            <circle cx="0" cy="0" r="21" fill="url(#nodeBg)" stroke="#0ea5e9" stroke-width="1.6" />
+            <rect x="-7" y="-7" width="5" height="5" rx="1" fill="#7dd3fc" />
+            <rect x="2" y="-7" width="5" height="5" rx="1" fill="#7dd3fc" />
+            <rect x="-7" y="2" width="5" height="5" rx="1" fill="#7dd3fc" />
+            <rect x="2" y="2" width="2" height="2" fill="#7dd3fc" />
+            <rect x="5" y="5" width="2" height="2" fill="#7dd3fc" />
+          </g>
+
+          <!-- Node 5: Certificate / Document (Right Mid: 600, 300) -->
+          <g transform="translate(600, 300)">
+            <circle cx="0" cy="0" r="26" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="2" />
+            <rect x="-8" y="-11" width="16" height="22" rx="2" fill="none" stroke="#7dd3fc" stroke-width="1.6" />
+            <line x1="-5" y1="-5" x2="5" y2="-5" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <line x1="-5" y1="-1" x2="5" y2="-1" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <line x1="-5" y1="3" x2="1" y2="3" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" />
+            <circle cx="3" cy="5" r="2.5" fill="#38bdf8" />
+          </g>
+
+          <!-- Node 6: Security Shield (Lower Right: 710, 365) -->
+          <g transform="translate(710, 365)">
+            <circle cx="0" cy="0" r="23" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="1.8" />
+            <path d="M -7,-8 L 7,-8 C 7,2 0,9 0,9 C 0,9 -7,2 -7,-8 Z" fill="rgba(56,189,248,0.2)" stroke="#7dd3fc" stroke-width="1.6" stroke-linejoin="round" />
+          </g>
+
+          <!-- Node 7: Shield / Protection (Bottom Right: 620, 430) -->
+          <g transform="translate(620, 430)">
+            <circle cx="0" cy="0" r="24" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="1.8" />
+            <path d="M -8,-9 L 8,-9 C 8,3 0,11 0,11 C 0,11 -8,3 -8,-9 Z" fill="rgba(56,189,248,0.2)" stroke="#7dd3fc" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="M -4,0 L -1,3 L 4,-3" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+
+          <!-- Node 8: Student Avatar (Bottom: 490, 465) -->
+          <g transform="translate(490, 465)">
+            <circle cx="0" cy="0" r="23" fill="url(#nodeBg)" stroke="#0ea5e9" stroke-width="1.8" />
+            <circle cx="0" cy="-4" r="5.5" fill="#7dd3fc" />
+            <path d="M -8,9 C -8,3 8,3 8,9" fill="none" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" />
+          </g>
+
+          <!-- Node 9: University / Institute Building (Lower Left: 370, 425) -->
+          <g transform="translate(370, 425)">
+            <circle cx="0" cy="0" r="27" fill="url(#nodeBg)" stroke="#38bdf8" stroke-width="2" />
+            <polygon points="0,-12 -12,-4 12,-4" fill="#7dd3fc" />
+            <line x1="-11" y1="8" x2="11" y2="8" stroke="#7dd3fc" stroke-width="2" stroke-linecap="round" />
+            <rect x="-9" y="-2" width="3" height="8" rx="0.5" fill="#7dd3fc" />
+            <rect x="-1.5" y="-2" width="3" height="8" rx="0.5" fill="#7dd3fc" />
+            <rect x="6" y="-2" width="3" height="8" rx="0.5" fill="#7dd3fc" />
+          </g>
+
+          <!-- Node 10: Student / User Profile (Mid Left: 370, 280) -->
+          <g transform="translate(370, 280)">
+            <circle cx="0" cy="0" r="24" fill="url(#nodeBg)" stroke="#0ea5e9" stroke-width="1.8" />
+            <circle cx="0" cy="-4" r="6" fill="#7dd3fc" />
+            <path d="M -9,9 C -9,3 9,3 9,9" fill="none" stroke="#7dd3fc" stroke-width="1.8" stroke-linecap="round" />
+          </g>
+
+          <!-- Node 11: Student Avatar (Far Left: 265, 225) -->
+          <g transform="translate(265, 225)">
+            <circle cx="0" cy="0" r="21" fill="url(#nodeBg)" stroke="#0ea5e9" stroke-width="1.6" />
+            <circle cx="0" cy="-3.5" r="5" fill="#7dd3fc" />
+            <path d="M -7,8 C -7,2.5 7,2.5 7,8" fill="none" stroke="#7dd3fc" stroke-width="1.6" stroke-linecap="round" />
+          </g>
+        </g>
+
+        <!-- CENTER GRADUATION CAP HUB (The Focal Star that POPS!) -->
+        <!-- Pulsing Radar Aura Waves -->
+        <circle class="network-radar-ring" cx="490" cy="300" r="82" stroke="rgba(56, 189, 248, 0.45)" stroke-width="2" stroke-dasharray="5 5" fill="none" />
+        <circle cx="490" cy="300" r="70" stroke="rgba(14, 165, 233, 0.55)" stroke-width="1.8" fill="none" />
+
+        <!-- Center Hub Group (Animated Pulse & Luminous Glow) -->
+        <g class="network-center-hub" filter="url(#centerPopGlow)">
+          <!-- Outer High-Intensity Cyan Ring -->
+          <circle cx="490" cy="300" r="54" fill="url(#hubRadial)" stroke="#38bdf8" stroke-width="3.5" />
+          <!-- Inner Thin Accent Ring -->
+          <circle cx="490" cy="300" r="46" fill="#071d3a" stroke="#0284c7" stroke-width="1.5" />
+
+          <!-- High-Contrast Crisp White Graduation Cap (Mortarboard) -->
+          <!-- Diamond Mortarboard Crown -->
+          <polygon points="490,274 528,293 490,309 452,293" fill="#ffffff" />
+          <!-- Skullcap Band -->
+          <path d="M 466,301 C 466,317 514,317 514,301 L 514,311 C 514,327 466,327 466,311 Z" fill="#e0f2fe" />
+          <!-- Tassel Ribbon & Hanging Button -->
+          <path d="M 490,274 L 531,291 L 531,313" fill="none" stroke="#bae6fd" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="531" cy="316" r="3.2" fill="#38bdf8" />
+        </g>
       </svg>
     </div>
 
@@ -214,8 +445,17 @@
             <div style="font-size: 0.74rem; color: #cbd5e1; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Human review</div>
           </div>
           <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; backdrop-filter: blur(8px);">
+<<<<<<< HEAD
             <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; line-height: 1.2;">Prove</div>
             <div style="font-size: 0.74rem; color: #cbd5e1; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Signed credentials</div>
+=======
+            <div style="font-size: 1.35rem; font-weight: 800; color: #60a5fa; line-height: 1.2;">Ed25519</div>
+            <div style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Digital Signatures</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; backdrop-filter: blur(8px);">
+            <div style="font-size: 1.35rem; font-weight: 800; color: #f59e0b; line-height: 1.2;">RBAC</div>
+            <div style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Flask-Login Shield</div>
+>>>>>>> source/main
           </div>
         </div>
       </div>
@@ -233,8 +473,9 @@
           <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid #edf2f7; padding-bottom: 14px; margin-bottom: 18px;">
             <div>
               <div style="font-size: 0.72rem; color: #64748b; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px;">ACADEMIC ID CARD</div>
-              <div style="font-weight: 800; font-size: 1.12rem; margin-top: 2px;">
-                <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span>
+              <div class="brand-bordered" style="font-size: 1.15rem; margin-top: 2px;">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 22px; height: 22px; border-radius: 5px; object-fit: contain; margin-right: 6px;">
+                <span class="brand-apaar">APAAR</span><span class="brand-setu">Setu</span>
               </div>
             </div>
             <span style="background: #e6f4ea; color: #137333; font-size: 0.76rem; font-weight: 700; padding: 5px 12px; border-radius: 6px; letter-spacing: 0.5px;">
@@ -280,8 +521,9 @@
   <div class="card" id="about" style="padding: 40px 36px; scroll-margin-top: 70px; border-radius: 14px; width: 100%;">
     <div class="grid grid-2" style="gap: 40px; align-items: center;">
       <div>
-        <h2 style="font-size: 1.75rem; margin-bottom: 14px;">
-          About <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span>
+        <h2 style="font-size: 1.75rem; margin-bottom: 14px; display: flex; align-items: center; gap: 10px;">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 32px; height: 32px; border-radius: 8px; object-fit: contain;">
+          <span>About <span class="brand-text" style="color: #14315c;">APAAR</span><span class="brand-text" style="color: #16a34a;">Setu</span></span>
         </h2>
         <p style="color: var(--text); line-height: 1.7; font-size: 0.98rem; margin-bottom: 14px;">
           <strong><span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span></strong> demonstrates how synthetic student records can support intake checks, identity investigations and academic credential verification. Identifiers are format-checked through a mock adapter; possible conflicts require human review.
@@ -317,8 +559,9 @@
 
   {# APAARSetu Benefits Section #}
   <div class="card" id="benefits" style="padding: 40px 36px; scroll-margin-top: 70px; border-radius: 14px; width: 100%;">
-    <h2 style="font-size: 1.75rem; margin-bottom: 24px;">
-      <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span> Benefits
+    <h2 style="font-size: 1.75rem; margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 32px; height: 32px; border-radius: 8px; object-fit: contain;">
+      <span><span class="brand-text" style="color: #14315c;">APAAR</span><span class="brand-text" style="color: #16a34a;">Setu</span> Benefits</span>
     </h2>
 
     <div class="grid grid-3" style="gap: 28px;">
@@ -363,8 +606,9 @@
   {# How APAARSetu Works Section (Connected Circle Stepper) #}
   <div class="card" id="how-it-works" style="padding: 40px 36px; scroll-margin-top: 70px; border-radius: 14px; width: 100%;">
     <div style="text-align: center; max-width: 720px; margin: 0 auto 36px;">
-      <h2 style="font-size: 1.8rem; margin-bottom: 8px;">
-        How <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span> Works
+      <h2 style="font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 34px; height: 34px; border-radius: 8px; object-fit: contain;">
+        <span>How <span class="brand-text" style="color: #14315c;">APAAR</span><span class="brand-text" style="color: #16a34a;">Setu</span> Works</span>
       </h2>
       <p style="color: var(--muted); font-size: 0.98rem; margin: 0;">
         A transparent, 4-stage governance framework ensuring record integrity from enrolment to credential issuance.
@@ -453,6 +697,134 @@
     </div>
   </div>
 
+  {# Security & Cryptographic Architecture Section #}
+  <div class="card" id="security" style="padding: 40px 36px; scroll-margin-top: 70px; border-radius: 14px; width: 100%;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 28px; border-bottom: 1px solid var(--border); padding-bottom: 20px;">
+      <div>
+        <div style="font-size: 0.8rem; font-weight: 750; color: #16a34a; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 6px;">
+          Security &amp; Cryptographic Architecture
+        </div>
+        <h2 style="font-size: 1.85rem; margin: 0 0 8px; color: var(--navy);">
+          Protected by <span style="color: #14315c;">Flask-Login RBAC</span> &amp; <span style="color: #16a34a;">Ed25519 Cryptography</span>
+        </h2>
+        <p style="color: var(--muted); font-size: 0.96rem; margin: 0; max-width: 780px; line-height: 1.6;">
+          APAARSetu safeguards the national academic ecosystem against unauthorized tampering, privilege escalation, and credential forgery through rigorous defense-in-depth engineering.
+        </p>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <span class="badge badge-ok" style="font-size: 0.82rem; padding: 6px 12px; font-weight: 700;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 4px; vertical-align: middle;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Multi-Tenant RBAC
+        </span>
+        <span class="badge badge-info" style="font-size: 0.82rem; padding: 6px 12px; font-weight: 700;">
+          RFC 8032 Asymmetric Signatures
+        </span>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="gap: 28px;">
+      {# Pillar 1: Flask-Login + RBAC #}
+      <div style="background: var(--surface); border: 1px solid var(--border); border-top: 4px solid var(--navy); border-radius: var(--radius); padding: 28px 24px; box-shadow: 0 4px 12px rgba(20,49,92,0.04); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+            <div style="width: 44px; height: 44px; background: rgba(20,49,92,0.08); color: var(--navy); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 1.18rem; font-weight: 750; color: var(--navy); line-height: 1.2;">Flask-Login + Granular RBAC</div>
+              <div style="font-size: 0.8rem; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Secure Authentication &amp; Tenancy Isolation</div>
+            </div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text); line-height: 1.55; margin-bottom: 18px;">
+            Every user request is authenticated and constrained at the server level, preventing unauthorized access and cross-institutional data leakage.
+          </p>
+
+          <div class="stack" style="gap: 12px;">
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: var(--ok); font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Server-Side Role Decorators:</strong> Strict <code>@roles_required</code> server enforcement across <code>AICTE_ADMIN</code>, <code>INSTITUTION_ADMIN</code>, <code>STUDENT</code>, and <code>AUDITOR</code>. Front-end checks are purely cosmetic.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: var(--ok); font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Multi-Tenant Database Scoping:</strong> <code>services/authz.py</code> automatically restricts ORM queries. An institution admin (e.g. VESIT) is mathematically prevented from viewing or modifying COEP or VJTI records.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: var(--ok); font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Cryptographic Session Security:</strong> Signed session cookies with <code>HttpOnly</code> and <code>SameSite=Lax</code> protections. Passwords are securely hashed with Werkzeug (scrypt/PBKDF2).
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: var(--ok); font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Brute-Force &amp; Stuffing Shield:</strong> Thread-safe in-memory <code>LoginRateLimiter</code> automatically locks accounts and client IPs after repeated authentication failures.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #edf2f7; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--muted); font-weight: 600;">ENFORCEMENT: SERVER-SIDE STRICT</span>
+          <span class="badge badge-info" style="font-size: 0.74rem;">ZERO PRIVILEGE ESCALATION</span>
+        </div>
+      </div>
+
+      {# Pillar 2: Ed25519 Cryptography #}
+      <div style="background: var(--surface); border: 1px solid var(--border); border-top: 4px solid #16a34a; border-radius: var(--radius); padding: 28px 24px; box-shadow: 0 4px 12px rgba(22,163,74,0.04); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+            <div style="width: 44px; height: 44px; background: rgba(22,163,74,0.08); color: #16a34a; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 15 2 2 4-4"/><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 1.18rem; font-weight: 750; color: var(--navy); line-height: 1.2;">Ed25519 Cryptography</div>
+              <div style="font-size: 0.8rem; color: #16a34a; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Asymmetric Digital Signatures &amp; Verifiable QR</div>
+            </div>
+          </div>
+          <p style="font-size: 0.9rem; color: var(--text); line-height: 1.55; margin-bottom: 18px;">
+            Academic milestone credentials and passports are mathematically sealed against forgery using state-of-the-art elliptic-curve cryptography.
+          </p>
+
+          <div class="stack" style="gap: 12px;">
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: #16a34a; font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Asymmetric Edwards-Curve Signatures:</strong> Uses RFC 8032 Ed25519 cryptography providing 128-bit security, immune to side-channel timing attacks and collision vulnerabilities.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: #16a34a; font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>RFC 8785 Canonical JSON (JCS):</strong> Payloads are serialized in deterministic, sorted UTF-8 byte streams before signing, eliminating whitespace and JSON malleability exploits.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: #16a34a; font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Zero-Network Offline Verification:</strong> Verification requires only the public key. Employers and universities can verify credentials offline without querying active internal databases.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: flex-start; font-size: 0.88rem; color: var(--text);">
+              <span style="color: #16a34a; font-weight: 800; font-size: 1rem; line-height: 1.2;">&check;</span>
+              <div>
+                <strong>Mathematical Non-Repudiation:</strong> Tampering with even 1 byte (such as modifying student grades or award year) instantly causes signature mathematical invalidation.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 14px; border-top: 1px solid #edf2f7; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--muted); font-weight: 600;">VERIFICATION: ED25519 PUBLIC KEY</span>
+          <span class="badge badge-ok" style="font-size: 0.74rem;">TAMPER-EVIDENT GUARANTEE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   {# Pre-Seeded Demo Roles Section #}
   {% if show_demo_accounts %}
   <div class="card" id="demo-access" style="padding: 40px 36px; scroll-margin-top: 70px; border-radius: 14px; width: 100%;">
@@ -520,6 +892,7 @@
   </div>
   {% endif %}
 
+<<<<<<< HEAD
   <section class="card landing-faq" id="questions"><h2>Common questions</h2>
     <article><h3>Is this connected to APAAR, AICTE, UIDAI or DigiLocker?</h3><p>No. This is a synthetic hackathon prototype. APAAR references receive a format check through a mock adapter.</p></article>
     <article><h3>Does a shared contact prove two records belong to one student?</h3><p>No. A shared contact or fee payer is an investigation signal. Officers review the evidence before deciding what to do.</p></article>
@@ -527,6 +900,14 @@
     <article><h3>Can a risk score automatically revoke a credential?</h3><p>No. Scores support human review and do not trigger automatic revocation.</p></article>
   </section>
   <footer class="landing-footer"><strong>APAARSetu</strong><nav aria-label="Footer links"><a href="#about">About</a><a href="#how-it-works">How it works</a><a href="#questions">Questions</a><a href="{{ url_for('auth.login_page') }}">Sign in</a></nav><span>Prototype — synthetic data only. No government integration.</span></footer>
+=======
+  {# Footer #}
+  <footer style="text-align: center; color: var(--muted); font-size: 0.88rem; padding: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;">
+    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="" style="width: 24px; height: 24px; border-radius: 6px; object-fit: contain;">
+    <span class="brand-text" style="font-size: 1.05rem;"><span style="color: #14315c; font-weight: 800;">APAAR</span><span style="color: #16a34a; font-weight: 800;">Setu</span></span>
+    <span>&bull; AICTE Approved Technical Institution Academic Registry &amp; Verification Portal</span>
+  </footer>
+>>>>>>> source/main
 
 </div>
 {% endblock %}

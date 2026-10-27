@@ -298,6 +298,8 @@ def test_landing_page_renders(app, client):
     assert b"Identity Graph" in res.data
     assert b"Academic Passport" in res.data
     assert b"Unified Student Intake &amp; Academic Governance" in res.data
+    assert b"Flask-Login + Granular RBAC" in res.data
+    assert b"Ed25519 Cryptography" in res.data
 
 
 def test_csrf_required_on_post_when_enabled():
