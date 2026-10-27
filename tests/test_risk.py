@@ -511,6 +511,7 @@ def test_graph_explorer_page_permissions_and_offline_assets(client, data, accoun
     assert 'id="graph-institution"' in html and 'id="graph-scan"' in html
     assert '/static/vendor/cytoscape.min.js' in html and '/static/js/identity-graph.js' in html
     assert "Records and evidence" in html and "not proof of duplicate identity" in html
+    assert "<details" not in html
     assert own.apaar_ref not in html
     api_login(client, accounts[1])
     html = client.get("/identity-graph").get_data(as_text=True)
@@ -577,6 +578,7 @@ def test_risk_pages_reviewer_options_and_read_only_role_rendering(client, data, 
     api_login(client, accounts[0])
     listing = client.get("/risk-cases")
     assert listing.status_code == 200 and '/static/js/risk.js' in listing.get_data(as_text=True)
+    assert '<details' not in listing.get_data(as_text=True)
     html = client.get("/risk-cases/" + case.id).get_data(as_text=True)
     assert 'data-action="RESOLVE"' in html and 'id="risk-reviewer"' in html
     reviewers = client.get("/api/risk/reviewers")

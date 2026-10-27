@@ -9,11 +9,11 @@
   <section aria-labelledby="risk-severity-heading"><h2 id="risk-severity-heading">By severity</h2><div class="risk-counts">
     {% for severity in severities %}<button type="button" class="card stat risk-stat" data-filter="severity" data-value="{{ severity }}" aria-pressed="false" disabled><span class="stat-number" data-count>—</span><span class="stat-label">{{ severity|title }}</span><span class="stat-trend">Filter cases</span></button>{% endfor %}
   </div></section>
-  <details class="risk-status-disclosure"><summary id="risk-status-heading">Cases by status</summary><div class="risk-counts risk-status-counts">
+  <section class="risk-status-section" aria-labelledby="risk-status-heading"><h2 id="risk-status-heading">Cases by status</h2><div class="risk-counts risk-status-counts">
     {% for status in statuses %}<button type="button" class="card stat risk-stat" data-filter="status" data-value="{{ status }}" aria-pressed="false" disabled><span class="stat-number" data-count>—</span><span class="stat-label">{{ status|replace('_', ' ')|title }}</span></button>{% endfor %}
-  </div></details>
+  </div></section>
   <section class="card risk-list-card" aria-label="Case filters and results">
-    <details class="filter-disclosure"><summary>Filter cases <span class="muted">— severity, status, institution and reviewer</span></summary>
+    <div class="visible-filters" aria-labelledby="risk-filters-title"><div class="visible-filters-heading"><h2 id="risk-filters-title">Filter cases</h2><p class="muted">Narrow by severity, status, institution and reviewer.</p></div>
     <form id="risk-filters" class="filter-bar" aria-label="Risk case filters">
       <div class="form-row"><label for="risk-severity">Severity</label><select id="risk-severity" name="severity" class="select"><option value="">All severities</option>{% for severity in severities %}<option value="{{ severity }}">{{ severity|title }}</option>{% endfor %}</select></div>
       <div class="form-row"><label for="risk-status">Status</label><select id="risk-status" name="status" class="select"><option value="">All statuses</option>{% for status in statuses %}<option value="{{ status }}">{{ status|replace('_', ' ')|title }}</option>{% endfor %}</select></div>
@@ -21,7 +21,7 @@
       <div class="form-row"><label for="risk-assigned">Assigned reviewer</label><select id="risk-assigned" name="assigned_to" class="select"><option value="">All reviewers</option><option value="__unassigned__">Unassigned</option></select></div>
       <div class="form-row"><label for="risk-search">Case reference / student name</label><input id="risk-search" name="q" type="search" maxlength="200" class="input" placeholder="Case reference or student name"></div>
       <button class="btn" type="submit">Apply filters</button><button class="btn btn-secondary" type="reset">Clear filters</button>
-    </form></details>
+    </form></div>
     <p id="risk-load-status" role="status" aria-live="polite"></p>
     <div id="risk-case-table"></div><div id="risk-pagination"></div>
   </section>

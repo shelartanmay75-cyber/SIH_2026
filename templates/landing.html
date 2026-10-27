@@ -98,9 +98,9 @@
   .landing-step-path path { stroke: var(--navy); stroke-width: 2; stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw-step-path 900ms ease-out forwards; }
   @keyframes draw-step-path { to { stroke-dashoffset: 0; } }
   .landing-faq { padding: 32px 36px; }
-  .landing-faq details { border-top: 1px solid var(--border); padding: 14px 0; }
-  .landing-faq details:last-child { border-bottom: 1px solid var(--border); }
-  .landing-faq summary { cursor: pointer; color: var(--navy); font-weight: 650; }
+  .landing-faq article { border-top: 1px solid var(--border); padding: 14px 0; }
+  .landing-faq article:last-child { border-bottom: 1px solid var(--border); }
+  .landing-faq h3 { color: var(--navy); font-weight: 650; }
   .landing-faq p { margin-top: 10px; color: var(--muted); }
   .landing-footer { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 20px 8px; border-top: 1px solid var(--border); }
   .landing-footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -521,10 +521,10 @@
   {% endif %}
 
   <section class="card landing-faq" id="questions"><h2>Common questions</h2>
-    <details><summary>Is this connected to APAAR, AICTE, UIDAI or DigiLocker?</summary><p>No. This is a synthetic hackathon prototype. APAAR references receive a format check through a mock adapter.</p></details>
-    <details><summary>Does a shared contact prove two records belong to one student?</summary><p>No. A shared contact or fee payer is an investigation signal. Officers review the evidence before deciding what to do.</p></details>
-    <details><summary>How are credentials checked?</summary><p>The backend checks the Ed25519 signature, stored claims, revocation state and expiry when a verification page is opened.</p></details>
-    <details><summary>Can a risk score automatically revoke a credential?</summary><p>No. Scores support human review and do not trigger automatic revocation.</p></details>
+    <article><h3>Is this connected to APAAR, AICTE, UIDAI or DigiLocker?</h3><p>No. This is a synthetic hackathon prototype. APAAR references receive a format check through a mock adapter.</p></article>
+    <article><h3>Does a shared contact prove two records belong to one student?</h3><p>No. A shared contact or fee payer is an investigation signal. Officers review the evidence before deciding what to do.</p></article>
+    <article><h3>How are credentials checked?</h3><p>The backend checks the Ed25519 signature, stored claims, revocation state and expiry when a verification page is opened.</p></article>
+    <article><h3>Can a risk score automatically revoke a credential?</h3><p>No. Scores support human review and do not trigger automatic revocation.</p></article>
   </section>
   <footer class="landing-footer"><strong>APAARSetu</strong><nav aria-label="Footer links"><a href="#about">About</a><a href="#how-it-works">How it works</a><a href="#questions">Questions</a><a href="{{ url_for('auth.login_page') }}">Sign in</a></nav><span>Prototype — synthetic data only. No government integration.</span></footer>
 

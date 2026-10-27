@@ -116,7 +116,7 @@
         rows: data.linked_records, emptyText: "No linked student records." });
       const relationships = N.el("ul", { class: "identity-evidence-list" }, data.edges.map(edge => N.el("li", {},
         N.el("strong", {}, shortTypes[edge.type] || edge.type), N.el("p", {}, edge.explanation),
-        N.el("details", {}, N.el("summary", {}, "Evidence fields"), keyValues(edge.evidence || {})))));
+        N.el("div", { class: "identity-evidence-fields" }, N.el("strong", {}, "Evidence fields"), keyValues(edge.evidence || {})))));
       const cases = N.el("ul", {}, data.linked_cases.map(item => N.el("li", {},
         N.el("a", { href: `/risk-cases/${encodeURIComponent(item.id)}`, on: { click: event => {
           if (!casePageAvailable() && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {

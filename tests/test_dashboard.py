@@ -93,5 +93,7 @@ def test_dashboard_and_reports_pages_load_scripts(client, governance):
     api_login(client, governance[2][0])
     dashboard = client.get("/dashboard")
     assert dashboard.status_code == 200 and b"js/dashboard.js" in dashboard.data and b"chart.umd.min.js" in dashboard.data
+    assert b'id="dashboard-filters-title"' in dashboard.data
+    assert b'<details' not in dashboard.data
     reports = client.get("/reports")
     assert reports.status_code == 200 and b"js/reports.js" in reports.data and b"anomaly-filters" in reports.data

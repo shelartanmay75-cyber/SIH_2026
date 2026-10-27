@@ -188,9 +188,9 @@ dialog .actions { justify-content: flex-end; }
 .legend-diamond { border: 2px solid var(--saffron); transform: rotate(45deg); }
 .legend-hexagon { background: #a3adba; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); }
 .identity-text-view { margin-top: 24px; border-top: 1px solid var(--border); padding-top: 16px; }
-.identity-text-view summary { cursor: pointer; font-weight: 600; }
 .identity-text-view h3, .identity-inspector h3 { margin: 16px 0 12px; }
 .identity-text-view .table-wrapper { max-height: 300px; }
+.identity-evidence-fields { margin-top: 8px; padding: 8px 12px; background: var(--bg); border-radius: var(--radius); }
 .identity-inspector .kv { grid-template-columns: minmax(80px, 1fr) minmax(0, 2fr); gap: 8px 12px; }
 .identity-inspector ul { padding-left: 20px; }
 .identity-evidence-list > li { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -201,7 +201,7 @@ dialog .actions { justify-content: flex-end; }
 .risk-notice { border-left: 3px solid var(--info); background: var(--info-bg); padding: 12px 16px; margin: 16px 0; }
 .risk-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 12px 0 24px; }
 .risk-status-counts { grid-template-columns: repeat(6, minmax(0, 1fr)); }
-.risk-status-disclosure > summary { color: var(--navy); cursor: pointer; font-weight: 650; padding: 8px 0; }
+.risk-status-section { margin-top: 16px; }
 .risk-stat { text-align: left; padding: 12px 16px; }
 .risk-stat .stat-number { font-size: 1.6rem; }
 .risk-stat[aria-pressed="true"] { border: 2px solid var(--navy); background: var(--info-bg); }
@@ -238,9 +238,14 @@ dialog .actions { justify-content: flex-end; }
 .governance-charts, .governance-lists { margin-top: 24px; }
 .governance-charts .chart-frame { position: relative; height: 260px; margin-top: 16px; }
 #governance-stats { margin-top: 16px; }
-.dash-more-indicators { grid-column: 1 / -1; }
-.dash-more-indicators > summary { color: var(--navy); cursor: pointer; font-weight: 650; padding: 8px 0; }
-.dash-more-indicators > .grid { margin-top: 12px; }
+.dashboard-indicators { margin: 20px 0 24px; }
+.dashboard-indicators h2 { margin-bottom: 12px; }
+.dashboard-indicator-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.dashboard-indicator-grid .dash-kpi-card { min-height: 114px; }
+.visible-filters-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 16px; }
+.visible-filters-heading h2 { color: var(--navy); }
+.visible-filters .filter-bar { margin: 0; }
+.visible-filters .actions { margin-top: 12px; }
 #governance-filters { margin-top: 16px; }
 #governance-filters .form-row { min-width: 145px; }
 .sharing-options { border: 1px solid var(--border); padding: 16px; margin: 16px 0; }
@@ -253,7 +258,9 @@ dialog .actions { justify-content: flex-end; }
 #risk-score-table tfoot th, #risk-score-table tfoot td { position: sticky; top: auto; bottom: 0; background: var(--surface); border-top: 2px solid var(--border); }
 #risk-score-table tfoot td:nth-child(2) { white-space: nowrap; }
 @media (max-width: 1100px) { .risk-status-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .dashboard-indicator-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 899px) { .risk-detail-grid { grid-template-columns: 1fr; } .risk-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .dashboard-indicator-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 @media (max-width: 1199px) {
   .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -317,6 +324,13 @@ dialog .actions { justify-content: flex-end; }
   box-shadow: 0 4px 14px rgba(20, 49, 92, 0.05);
   transition: box-shadow 0.2s ease;
   margin-bottom: 16px;
+}
+.visible-filters.dash-sticky-filters {
+  position: static;
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
 }
 
 .dash-active-chips {

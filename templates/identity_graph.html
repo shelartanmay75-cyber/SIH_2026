@@ -6,7 +6,7 @@
   <h1>Identity graph explorer</h1>
   <p class="muted">Explore synthetic academic records and the evidence behind possible identity links. Human review is required.</p>
   {% if focused_case %}<p class="identity-notice">Case cluster: <strong>{{ focused_case.reference }}</strong>. The graph is limited to this case. <a href="{{ url_for('identity.explorer') }}">View all records</a></p>{% endif %}
-  <details class="card identity-filters filter-disclosure"><summary>Graph filters <span class="muted">— focus the records shown</span></summary>
+  <section class="card identity-filters visible-filters" aria-labelledby="graph-filters-title"><div class="visible-filters-heading"><h2 id="graph-filters-title">Graph filters</h2><p class="muted">Focus the records shown.</p></div>
     <form id="graph-filters" class="filter-bar" aria-label="Graph filters">
       <div class="form-row"><label for="graph-year">Academic year</label><select id="graph-year" class="select" name="academic_year"><option value="">All years</option>{% for year in academic_years %}<option value="{{ year }}">{{ year }}</option>{% endfor %}</select></div>
       {% if current_user.role == 'AICTE_ADMIN' %}<div class="form-row"><label for="graph-institution">Institution</label><select id="graph-institution" class="select" name="institution_id"><option value="">All institutions</option>{% for institution in institutions %}<option value="{{ institution.id }}">{{ institution.code }}</option>{% endfor %}</select></div>{% endif %}
@@ -16,8 +16,8 @@
       <button class="btn btn-secondary" type="submit">Apply filters</button>
     </form>
     <div class="actions">{% if can_scan %}<button id="graph-scan" class="btn" type="button">Run identity scan</button>{% endif %}<button id="graph-reset" class="btn btn-secondary" type="button">Reset view</button></div>
-  </details>
-  <p class="muted identity-intro">Showing high-priority relationships first. Open Graph filters to include lower-severity records and investigation signals.</p>
+  </section>
+  <p class="muted identity-intro">Showing high-priority relationships first. Use the filters above to include lower-severity records and investigation signals.</p>
   <p id="graph-status" role="status" aria-live="polite"></p>
   <p id="graph-warning" class="identity-notice" role="status" hidden>Graph truncated: only part of the matching data is shown. Narrow the institution, year, severity or case filters.</p>
   <div class="identity-layout">
@@ -35,7 +35,7 @@
         <ul><li><span class="legend-circle" aria-hidden="true"></span> Student: navy circle; green / amber / red border = Low / Medium / High risk. A thick red border = Critical.</li><li><span class="legend-square" aria-hidden="true"></span> Institution: grey-blue square.</li><li><span class="legend-diamond" aria-hidden="true"></span> APAAR: diamond with a saffron outline; masked label only.</li><li><span class="legend-hexagon" aria-hidden="true"></span> Contact / fee payer: muted hexagon or tag.</li><li>Solid lines: identity-level evidence. Dashed lines: investigation signals.</li></ul>
         <p><strong>Shared contact or fee-payer links are investigation signals, not proof of duplicate identity.</strong></p>
       </div>
-      <details class="identity-text-view" open><summary>Records and evidence — text view</summary><h3>Nodes</h3><div id="graph-node-list"></div><h3>Relationships</h3><div id="graph-edge-list"></div></details>
+      <section class="identity-text-view" aria-labelledby="graph-evidence-title"><h3 id="graph-evidence-title">Records and evidence — text view</h3><h3>Nodes</h3><div id="graph-node-list"></div><h3>Relationships</h3><div id="graph-edge-list"></div></section>
     </section>
     <aside class="card identity-inspector" aria-labelledby="inspector-heading"><div class="card-header"><h2 id="inspector-heading">Inspector</h2></div><div id="graph-inspector" aria-busy="false"><p>Select a node or an edge, or use an Inspect button in the text view.</p></div></aside>
   </div>

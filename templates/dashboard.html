@@ -18,11 +18,14 @@
   </div>
 
   {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}
-  <div id="governance-stats" class="grid grid-4 dash-mb-lg"></div>
+  <section class="dashboard-indicators" aria-labelledby="dashboard-indicators-title">
+    <h2 id="dashboard-indicators-title">Key indicators</h2>
+    <div id="governance-stats" class="dashboard-indicator-grid" aria-label="Key governance figures"></div>
+  </section>
   {% endif %}
 
-  <details class="filter-disclosure dash-sticky-filters">
-    <summary>Filters <span class="muted">— year, institution, programme and status</span></summary>
+  <section class="card visible-filters dash-sticky-filters" aria-labelledby="dashboard-filters-title">
+    <div class="visible-filters-heading"><h2 id="dashboard-filters-title">Filters</h2><p class="muted">Narrow the dashboard by year, institution, programme and status.</p></div>
     <form id="governance-filters" class="filter-bar dash-filter-form">
       <div class="form-row"><label for="dash-year">Academic year</label><select id="dash-year" name="academic_year" class="select"><option value="">All years</option></select></div>
       {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}<div class="form-row"><label for="dash-institution">Institution</label><select id="dash-institution" name="institution_id" class="select"><option value="">All institutions</option></select></div>{% endif %}
@@ -43,7 +46,7 @@
         <div id="dash-active-chips" class="dash-active-chips u-hidden"></div>
       </div>
     </form>
-  </details>
+  </section>
 
   {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}
 
