@@ -18,20 +18,7 @@
   </div>
 
   {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}
-  <div class="dashboard-first-view">
-    <section class="card dashboard-overview" aria-labelledby="overview-title">
-      <div class="dashboard-overview-heading"><div><h2 id="overview-title">Governance at a glance</h2><p class="muted">Choose a measure; select a chart bar to open the relevant page.</p></div>
-        <div class="dashboard-metric-switch" role="group" aria-label="Chart measure">
-          <button type="button" class="btn btn-secondary" data-overview="risk" aria-pressed="true">Risk cases</button>
-          <button type="button" class="btn btn-secondary" data-overview="enrolment" aria-pressed="false">Enrolment</button>
-          <button type="button" class="btn btn-secondary" data-overview="capacity" aria-pressed="false">Capacity</button>
-        </div>
-      </div>
-      <div class="dashboard-overview-chart"><canvas id="chart-overview" role="img" aria-label="Governance chart for the selected measure"></canvas><p id="overview-loading" role="status">Loading chart...</p></div>
-      <p id="overview-summary" class="dashboard-overview-summary" role="status" aria-live="polite"></p>
-    </section>
-    <div id="governance-stats" class="grid grid-2 dashboard-primary-stats" aria-label="Key governance figures"></div>
-  </div>
+  <div id="governance-stats" class="grid grid-4 dash-mb-lg"></div>
   {% endif %}
 
   <details class="filter-disclosure dash-sticky-filters">

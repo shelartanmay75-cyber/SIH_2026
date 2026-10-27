@@ -97,19 +97,13 @@
   .landing-step-path { position: absolute; inset: 23px 40px auto; width: calc(100% - 80px); height: 2px; z-index: 1; }
   .landing-step-path path { stroke: var(--navy); stroke-width: 2; stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw-step-path 900ms ease-out forwards; }
   @keyframes draw-step-path { to { stroke-dashoffset: 0; } }
-  .landing-footer { background: var(--navy-dark); color: #ffffff; border-radius: 10px; padding: 32px 36px 18px; }
-  .landing-footer-main { display: grid; grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(140px, 1fr)); gap: 28px; }
-  .landing-footer-brand { display: flex; align-items: center; gap: 12px; font-size: 1.25rem; font-weight: 700; }
-  .landing-footer-brand img { width: 40px; height: 40px; border-radius: 8px; }
-  .landing-footer p { color: #d9e4f2; margin-top: 12px; max-width: 380px; }
-  .landing-footer h2 { color: #ffffff; font-size: 1rem; margin-bottom: 12px; }
-  .landing-footer nav { display: grid; align-content: start; gap: 10px; }
-  .landing-footer a { color: #e6eff9; text-decoration: none; }
-  .landing-footer a:hover { text-decoration: underline; }
-  .landing-footer-bottom { border-top: 1px solid #61758c; margin-top: 28px; padding-top: 16px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: #d9e4f2; font-size: .88rem; }
-  .public-shell:has(.landing-full-wrap) .shell-main > .footer { display: none; }
-  @media (max-width: 700px) { .landing-footer-main { grid-template-columns: 1fr 1fr; } .landing-footer-main > div:first-child { grid-column: 1 / -1; } }
-  @media (max-width: 480px) { .landing-footer { padding: 24px; } .landing-footer-main { grid-template-columns: 1fr; } .landing-footer-main > div:first-child { grid-column: auto; } }
+  .landing-faq { padding: 32px 36px; }
+  .landing-faq details { border-top: 1px solid var(--border); padding: 14px 0; }
+  .landing-faq details:last-child { border-bottom: 1px solid var(--border); }
+  .landing-faq summary { cursor: pointer; color: var(--navy); font-weight: 650; }
+  .landing-faq p { margin-top: 10px; color: var(--muted); }
+  .landing-footer { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 20px 8px; border-top: 1px solid var(--border); }
+  .landing-footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
   @media (prefers-reduced-motion: reduce) { html:has(.landing-full-wrap) { scroll-behavior: auto; } .landing-step-path path { animation: none; stroke-dashoffset: 0; } }
   @media (max-width: 1024px) {
     .public-shell .content {
@@ -526,14 +520,13 @@
   </div>
   {% endif %}
 
-  <footer class="landing-footer">
-    <div class="landing-footer-main">
-      <div><div class="landing-footer-brand"><img src="{{ url_for('static', filename='img/favicon-180.png') }}" alt=""><span>APAARSetu</span></div><p>A synthetic demonstration of academic intake checks, identity review and signed credential verification.</p></div>
-      <nav aria-label="Explore the platform"><h2>Explore</h2><a href="#about">About</a><a href="#benefits">Benefits</a><a href="#how-it-works">How it works</a></nav>
-      <nav aria-label="Access and verification"><h2>Access</h2>{% if show_demo_accounts %}<a href="#demo-access">Demo roles</a>{% endif %}<a href="{{ url_for('auth.login_page') }}">Sign in</a><a href="/verify/CRED-DEMO01">Demo verification</a></nav>
-    </div>
-    <div class="landing-footer-bottom"><span>Smart India Hackathon prototype · PS 26263</span><span>Prototype — synthetic data only. No connection to AICTE, APAAR, UIDAI or DigiLocker.</span><a href="#home">Back to top ↑</a></div>
-  </footer>
+  <section class="card landing-faq" id="questions"><h2>Common questions</h2>
+    <details><summary>Is this connected to APAAR, AICTE, UIDAI or DigiLocker?</summary><p>No. This is a synthetic hackathon prototype. APAAR references receive a format check through a mock adapter.</p></details>
+    <details><summary>Does a shared contact prove two records belong to one student?</summary><p>No. A shared contact or fee payer is an investigation signal. Officers review the evidence before deciding what to do.</p></details>
+    <details><summary>How are credentials checked?</summary><p>The backend checks the Ed25519 signature, stored claims, revocation state and expiry when a verification page is opened.</p></details>
+    <details><summary>Can a risk score automatically revoke a credential?</summary><p>No. Scores support human review and do not trigger automatic revocation.</p></details>
+  </section>
+  <footer class="landing-footer"><strong>APAARSetu</strong><nav aria-label="Footer links"><a href="#about">About</a><a href="#how-it-works">How it works</a><a href="#questions">Questions</a><a href="{{ url_for('auth.login_page') }}">Sign in</a></nav><span>Prototype — synthetic data only. No government integration.</span></footer>
 
 </div>
 {% endblock %}
