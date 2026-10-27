@@ -34,7 +34,7 @@
     opacity: 0.13;
     pointer-events: none;
     z-index: 1;
-    animation: spinChakra 34s linear infinite;
+    animation: none;
   }
   .nav-pill-btn {
     display: inline-flex;
@@ -48,9 +48,9 @@
     transition: all 0.2s ease;
   }
   .nav-pill-active {
-    background: #4f46e5;
+    background: var(--navy);
     color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+    box-shadow: none;
   }
   .nav-pill-ghost {
     color: #334155;
@@ -61,7 +61,7 @@
     color: #0f172a;
   }
   .hero-pill-primary {
-    background: #4f46e5;
+    background: var(--navy);
     color: #ffffff !important;
     padding: 12px 28px;
     border-radius: 26px;
@@ -71,12 +71,11 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: none;
+    transition: background 0.15s ease;
   }
   .hero-pill-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+    background: var(--navy-dark);
   }
   .hero-pill-secondary {
     background: #ffffff;
@@ -89,13 +88,23 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: transform 0.15s ease;
+    box-shadow: none;
   }
   .hero-pill-secondary:hover {
-    transform: translateY(-2px);
     background: #f8fafc;
   }
+  html:has(.landing-full-wrap) { scroll-behavior: smooth; }
+  .landing-step-path { position: absolute; inset: 23px 40px auto; width: calc(100% - 80px); height: 2px; z-index: 1; }
+  .landing-step-path path { stroke: var(--navy); stroke-width: 2; stroke-dasharray: 100; stroke-dashoffset: 100; animation: draw-step-path 900ms ease-out forwards; }
+  @keyframes draw-step-path { to { stroke-dashoffset: 0; } }
+  .landing-faq { padding: 32px 36px; }
+  .landing-faq details { border-top: 1px solid var(--border); padding: 14px 0; }
+  .landing-faq details:last-child { border-bottom: 1px solid var(--border); }
+  .landing-faq summary { cursor: pointer; color: var(--navy); font-weight: 650; }
+  .landing-faq p { margin-top: 10px; color: var(--muted); }
+  .landing-footer { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; padding: 20px 8px; border-top: 1px solid var(--border); }
+  .landing-footer nav { display: flex; flex-wrap: wrap; gap: 16px; }
+  @media (prefers-reduced-motion: reduce) { html:has(.landing-full-wrap) { scroll-behavior: auto; } .landing-step-path path { animation: none; stroke-dashoffset: 0; } }
   @media (max-width: 1024px) {
     .public-shell .content {
       padding: 12px 16px 36px !important;
@@ -113,14 +122,12 @@
   {# Top Navbar (Inspired by PM-AJAY Gov Platform Layout) #}
   <header class="card" style="padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-radius: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); width: 100%;">
     <div style="display: flex; align-items: center; gap: 16px;">
-      <div style="width: 48px; height: 48px; background: #1e1b4b; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-weight: 800; font-size: 1.25rem; letter-spacing: 0.5px; box-shadow: 0 2px 6px rgba(30,27,75,0.3);">
-        IN
-      </div>
+      <img src="{{ url_for('static', filename='img/favicon-180.png') }}" width="48" height="48" alt="" style="border-radius: 10px;">
       <div>
         <div style="font-size: 1.4rem; font-weight: 800; line-height: 1.2;">
           <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span> Platform
         </div>
-        <div style="font-size: 0.8rem; color: #64748b; font-weight: 500;">Ministry of Education &amp; AICTE Academic Registry</div>
+        <div style="font-size: 0.8rem; color: #64748b; font-weight: 500;">Synthetic academic governance prototype</div>
       </div>
     </div>
 
@@ -135,20 +142,20 @@
       </a>
       <a href="#how-it-works" class="nav-pill-btn nav-pill-ghost">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Programs
+        How it works
       </a>
       <a href="#demo-access" class="nav-pill-btn nav-pill-ghost">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Demo Roles
       </a>
-      <a href="{{ url_for('auth.login_page') }}" class="nav-pill-btn" style="background: #4f46e5; color: #ffffff !important; margin-left: 8px; box-shadow: 0 3px 8px rgba(79, 70, 229, 0.35);">
+      <a href="{{ url_for('auth.login_page') }}" class="nav-pill-btn" style="background: var(--navy); color: #ffffff !important; margin-left: 8px;">
         Sign In &rarr;
       </a>
     </nav>
   </header>
 
   {# Hero Banner with Full-Width Indian Tricolour Gradient, Rotating Ashoka Chakra, and Image 2 Card on Right #}
-  <div id="home" style="position: relative; overflow: hidden; border-radius: 18px; width: 100%; background: radial-gradient(ellipse at 12% 18%, rgba(255, 140, 0, 0.28) 0%, transparent 45%), radial-gradient(ellipse at 88% 85%, rgba(19, 136, 8, 0.24) 0%, transparent 45%), linear-gradient(135deg, #07152b 0%, #0d2242 50%, #0b1a30 100%); border: 1px solid #1e293b; box-shadow: 0 14px 40px rgba(7, 21, 43, 0.4);">
+  <div id="home" style="position: relative; overflow: hidden; border-radius: 10px; width: 100%; background: var(--navy-dark); border: 1px solid var(--navy);">
 
     {# Top Subtle 4px Indian Tricolour Accent Strip #}
     <div style="height: 4px; width: 100%; display: flex; position: absolute; top: 0; left: 0; right: 0; z-index: 3;">
@@ -184,7 +191,7 @@
           Integrity
         </h1>
         <p style="font-size: 1.05rem; color: #cbd5e1; line-height: 1.7; margin: 0 0 28px; max-width: 580px;">
-          A comprehensive unified portal for AICTE-approved institutions and universities. Anchoring student-level intake compliance, preventing unauthorized over-enrolment, detecting duplicate identities, and securing tamper-evident academic passports across India.
+          Explore a synthetic prototype for student intake checks, explainable identity investigations and signed academic credentials.
         </p>
 
         <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 34px;">
@@ -199,16 +206,16 @@
         {# KPI Stat Cards along the bottom of the hero (Frosted Glass) #}
         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
           <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; backdrop-filter: blur(8px);">
-            <div style="font-size: 1.35rem; font-weight: 800; color: #ffffff; line-height: 1.2;">100%</div>
-            <div style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Intake Enforced</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; line-height: 1.2;">Prevent</div>
+            <div style="font-size: 0.74rem; color: #cbd5e1; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Seat Ledger</div>
           </div>
           <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; backdrop-filter: blur(8px);">
-            <div style="font-size: 1.35rem; font-weight: 800; color: #34d399; line-height: 1.2;">Zero</div>
-            <div style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Ghost Admissions</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; line-height: 1.2;">Detect</div>
+            <div style="font-size: 0.74rem; color: #cbd5e1; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Human review</div>
           </div>
           <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px 20px; backdrop-filter: blur(8px);">
-            <div style="font-size: 1.35rem; font-weight: 800; color: #60a5fa; line-height: 1.2;">Ed25519</div>
-            <div style="font-size: 0.74rem; color: #94a3b8; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Verifiable Passports</div>
+            <div style="font-size: 1.1rem; font-weight: 800; color: #ffffff; line-height: 1.2;">Prove</div>
+            <div style="font-size: 0.74rem; color: #cbd5e1; text-transform: uppercase; font-weight: 600; margin-top: 3px;">Signed credentials</div>
           </div>
         </div>
       </div>
@@ -231,7 +238,7 @@
               </div>
             </div>
             <span style="background: #e6f4ea; color: #137333; font-size: 0.76rem; font-weight: 700; padding: 5px 12px; border-radius: 6px; letter-spacing: 0.5px;">
-              VERIFIED
+              ILLUSTRATIVE
             </span>
           </div>
 
@@ -252,16 +259,16 @@
             <div>
               <div style="font-size: 0.68rem; color: #64748b; font-weight: 700; letter-spacing: 0.5px;">UNIQUE IDENTIFIER (MASKED)</div>
               <div style="font-family: monospace; font-size: 1.18rem; font-weight: 800; color: #0c2340; letter-spacing: 1.5px; margin-top: 2px;">
-                9154&nbsp; 5678&nbsp; 3420
+                XXXXXXXX3420
               </div>
             </div>
             <div style="width: 46px; height: 46px; background: #dde5ed; border: 1px solid #cbd5e1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.74rem; font-weight: 800; color: #0c2340;">
-              [ QR ]
+              DEMO
             </div>
           </div>
 
           <div style="margin-top: 14px; font-size: 0.78rem; color: #64748b; text-align: center; font-weight: 500;">
-            Tamper-evident verifiable academic credential
+            Illustrative synthetic record. <a href="/verify/CRED-DEMO01">See a live demo verification</a>.
           </div>
         </div>
       </div>
@@ -277,10 +284,10 @@
           About <span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span>
         </h2>
         <p style="color: var(--text); line-height: 1.7; font-size: 0.98rem; margin-bottom: 14px;">
-          <strong><span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span></strong> serves as the digital bridge connecting students, institutions, and regulatory coordinators into a cohesive, verified academic framework. By anchoring institutional admissions to unique academic identifiers, the platform guarantees that each student's educational trajectory is permanently recorded, validated, and protected against duplication.
+          <strong><span style="color: #14315c;">APAAR</span><span style="color: #16a34a;">Setu</span></strong> demonstrates how synthetic student records can support intake checks, identity investigations and academic credential verification. Identifiers are format-checked through a mock adapter; possible conflicts require human review.
         </p>
         <p style="color: var(--muted); line-height: 1.7; font-size: 0.94rem; margin: 0;">
-          The system simplifies credit recognition, enforces sanctioned intake caps in real time, and streamlines seamless transitions between academic institutions.
+          The prototype also demonstrates capacity checks and selective sharing of signed credential claims.
         </p>
       </div>
 
@@ -289,7 +296,7 @@
         <div style="background: var(--bg); border-left: 4px solid var(--navy); padding: 16px 20px; border-radius: var(--radius);">
           <div style="font-weight: 650; color: var(--navy); font-size: 0.98rem;">Dynamic Seat Ledger (Prevent)</div>
           <div style="font-size: 0.88rem; color: var(--muted); margin-top: 3px;">
-            Guarantees that admission numbers never exceed approved intake limits for any academic branch.
+            Checks each admission attempt against the configured seat capacity before accepting it.
           </div>
         </div>
         <div style="background: var(--bg); border-left: 4px solid var(--warn); padding: 16px 20px; border-radius: var(--radius);">
@@ -301,7 +308,7 @@
         <div style="background: var(--bg); border-left: 4px solid #16a34a; padding: 16px 20px; border-radius: var(--radius);">
           <div style="font-weight: 650; color: var(--navy); font-size: 0.98rem;">Academic Passport (Prove)</div>
           <div style="font-size: 0.88rem; color: var(--muted); margin-top: 3px;">
-            Provides asymmetric Ed25519 cryptographic credentials verifiable offline via secure QR code.
+            Provides Ed25519-signed credentials checked by the backend through a QR-linked page.
           </div>
         </div>
       </div>
@@ -334,7 +341,7 @@
         <div>
           <div style="font-weight: 650; color: var(--navy); margin-bottom: 4px; font-size: 0.98rem;">Prevent Intake Exploitation</div>
           <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.55; margin: 0;">
-            Eliminates unauthorized over-intake and ghost admissions through rigorous database-level ledger locks.
+            Blocks admission attempts that exceed configured intake and records the rejected attempt.
           </p>
         </div>
       </div>
@@ -346,7 +353,7 @@
         <div>
           <div style="font-weight: 650; color: var(--navy); margin-bottom: 4px; font-size: 0.98rem;">Enable Mobility &amp; Academic Flexibility</div>
           <p style="color: var(--muted); font-size: 0.88rem; line-height: 1.55; margin: 0;">
-            Permits instant, tamper-evident degree verification for employers, universities, and coordinators.
+            Lets a verifier check a signed synthetic credential and its current status.
           </p>
         </div>
       </div>
@@ -367,21 +374,21 @@
     {# 4 Connected Number Circles #}
     <div style="display: flex; justify-content: space-between; align-items: center; position: relative; max-width: 860px; margin: 0 auto 36px; padding: 0 20px;">
       {# Connecting Line #}
-      <div style="position: absolute; top: 23px; left: 40px; right: 40px; height: 2px; background: var(--border); z-index: 1;"></div>
+      <svg class="landing-step-path" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true"><path d="M0 1 H100" fill="none" pathLength="100"></path></svg>
 
-      <button type="button" class="tour-step-circle" data-step="1" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: #ffffff; border: 3px solid #ffffff; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+      <button type="button" class="tour-step-circle" data-step="1" aria-label="Step 1: Student onboarding" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: #ffffff; border: 3px solid #ffffff; font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
         01.
       </button>
 
-      <button type="button" class="tour-step-circle" data-step="2" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <button type="button" class="tour-step-circle" data-step="2" aria-label="Step 2: Seat ledger" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
         02.
       </button>
 
-      <button type="button" class="tour-step-circle" data-step="3" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <button type="button" class="tour-step-circle" data-step="3" aria-label="Step 3: Identity investigation" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
         03.
       </button>
 
-      <button type="button" class="tour-step-circle" data-step="4" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+      <button type="button" class="tour-step-circle" data-step="4" aria-label="Step 4: Credential verification" style="z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--surface); color: var(--navy); border: 2px solid var(--border); font-weight: 700; font-size: 0.95rem; cursor: pointer; display: flex; align-items: center; justify-content: center;">
         04.
       </button>
     </div>
@@ -412,7 +419,7 @@
           The Dynamic Seat Ledger verifies sanctioned intake caps in real time. In a programme with 120 sanctioned regular seats, admission #120 succeeds; any subsequent attempt to admit student #121 is blocked with a <code>CAPACITY_EXCEEDED</code> rejection.
         </p>
         <div style="font-size: 0.85rem; color: var(--muted); background: var(--bg); padding: 8px 12px; border-radius: 4px;">
-          <strong>Result:</strong> Eliminates ghost admissions and strictly preserves supernumerary quota isolation.
+          <strong>Result:</strong> Excess attempts are rejected; regular and supernumerary capacity remain separate.
         </div>
       </div>
 
@@ -437,10 +444,10 @@
           <span class="badge badge-ok">STAGE 4 &bull; PROVE</span>
         </div>
         <p style="color: var(--text); line-height: 1.6; margin: 0 0 10px; font-size: 0.94rem;">
-          Upon graduation or milestone completion, institutions sign academic credentials using Ed25519 asymmetric cryptography. Students receive verifiable digital certificates readable via QR code without database lookups.
+          An authorised officer can issue an Ed25519-signed synthetic credential. Its QR code opens a backend verification page that checks signature, stored claims, revocation and expiry.
         </p>
         <div style="font-size: 0.85rem; color: var(--muted); background: var(--bg); padding: 8px 12px; border-radius: 4px;">
-          <strong>Result:</strong> Third-party employers and verifiers authenticate degrees in milliseconds offline.
+          <strong>Result:</strong> Verifiers see a current backend result and only the permitted claims.
         </div>
       </div>
     </div>
@@ -513,10 +520,13 @@
   </div>
   {% endif %}
 
-  {# Footer #}
-  <footer style="text-align: center; color: var(--muted); font-size: 0.88rem; padding: 16px 0;">
-    <span style="color: #14315c; font-weight: 700;">APAAR</span><span style="color: #16a34a; font-weight: 700;">Setu</span> &bull; AICTE Approved Technical Institution Academic Registry &amp; Verification Portal
-  </footer>
+  <section class="card landing-faq" id="questions"><h2>Common questions</h2>
+    <details><summary>Is this connected to APAAR, AICTE, UIDAI or DigiLocker?</summary><p>No. This is a synthetic hackathon prototype. APAAR references receive a format check through a mock adapter.</p></details>
+    <details><summary>Does a shared contact prove two records belong to one student?</summary><p>No. A shared contact or fee payer is an investigation signal. Officers review the evidence before deciding what to do.</p></details>
+    <details><summary>How are credentials checked?</summary><p>The backend checks the Ed25519 signature, stored claims, revocation state and expiry when a verification page is opened.</p></details>
+    <details><summary>Can a risk score automatically revoke a credential?</summary><p>No. Scores support human review and do not trigger automatic revocation.</p></details>
+  </section>
+  <footer class="landing-footer"><strong>APAARSetu</strong><nav aria-label="Footer links"><a href="#about">About</a><a href="#how-it-works">How it works</a><a href="#questions">Questions</a><a href="{{ url_for('auth.login_page') }}">Sign in</a></nav><span>Prototype — synthetic data only. No government integration.</span></footer>
 
 </div>
 {% endblock %}

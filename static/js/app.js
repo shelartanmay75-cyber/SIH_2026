@@ -446,9 +446,28 @@
     renderTable, paginate, filterBar, badge, statusBadge, fmtDate, fmtDateTime,
     fmtNumber, fmtPercent, escapeHTML, el, withButtonLock, loadFilters });
 
-  const enhanceFlashes = () => document.querySelectorAll("#toast-container .toast").forEach(node => {
-    if (!node.querySelector(".toast-close")) prepareToast(node, 4000, document.activeElement);
-  });
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", enhanceFlashes, { once: true });
-  else enhanceFlashes();
+  const enhanceShell = () => {
+    document.querySelectorAll("#toast-container .toast").forEach(node => {
+      if (!node.querySelector(".toast-close")) prepareToast(node, 4000, document.activeElement);
+    });
+    const toggle = document.querySelector(".sidebar-menu-toggle");
+    const menu = document.getElementById("sidebar-menu");
+    const syncMenu = () => {
+      if (!toggle || !menu) return;
+      if (window.matchMedia("(max-width: 899px)").matches) {
+        menu.hidden = toggle.getAttribute("aria-expanded") !== "true";
+      } else {
+        menu.hidden = false;
+      }
+    };
+    syncMenu();
+    window.addEventListener("resize", syncMenu);
+    toggle?.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!expanded));
+      menu.hidden = expanded;
+    });
+  };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", enhanceShell, { once: true });
+  else enhanceShell();
 })();

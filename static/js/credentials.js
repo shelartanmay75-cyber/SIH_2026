@@ -55,16 +55,24 @@
 
   /** Search eligible records with stale-response protection and real pagination. */
   async function students(page = 1) {
+    const query = get("credential-search").value.trim();
+    if (query.length < 2) {
+      get("credential-search-status").textContent = "Enter at least 2 characters of the student name.";
+      get("credential-students").replaceChildren();
+      get("credential-student-pages").replaceChildren();
+      return;
+    }
     const ticket = ++searchTicket;
     get("credential-search-status").textContent = "Loading students...";
     try {
-      const { data, meta } = await N.api("/api/credentials/eligible-students", { params: { q: get("credential-search").value.trim(), page } });
+      const { data, meta } = await N.api("/api/credentials/eligible-students", { params: { q: query, page } });
       if (ticket !== searchTicket) return;
       N.renderTable(get("credential-students"), { columns: [{ key: "full_name", label: "Name" }, { key: "apaar_masked", label: "Masked APAAR" }, { key: "programme_name", label: "Programme" },
         { key: "enrolment_status", label: "Status", render: N.statusBadge }, { key: "id", label: "Select", render: (id, row) => N.el("button", { type: "button", class: "btn btn-secondary", on: { click: () => {
           selected = row; get("credential-selection").textContent = `${row.full_name} — ${row.programme_name}`;
           get("credential-issue-submit").disabled = false; get("credential-warnings").hidden = true; get("credential-acknowledge").checked = false;
           get("credential-issue-error").textContent = "";
+          get("credential-issue-step").scrollIntoView({ behavior: "auto", block: "start" });
         } } }, "Select student") }], rows: data, emptyText: "No eligible students match the search." });
       N.paginate(get("credential-student-pages"), meta, students);
       get("credential-search-status").textContent = `${meta.total} eligible students.`;
@@ -122,5 +130,5 @@
       N.toast("Credential revoked.", "ok"); await history();
     }).catch(error => { get("credential-revoke-error").textContent = error.message; });
   });
-  void students(); void history();
+  void history();
 })();

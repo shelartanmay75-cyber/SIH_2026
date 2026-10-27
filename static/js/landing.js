@@ -37,6 +37,7 @@
     const circles = document.querySelectorAll(".tour-step-circle");
     circles.forEach(circle => {
       const s = parseInt(circle.dataset.step, 10);
+      circle.setAttribute("aria-pressed", String(s === activeStep));
       if (s === activeStep) {
         circle.style.background = "var(--navy)";
         circle.style.color = "#ffffff";

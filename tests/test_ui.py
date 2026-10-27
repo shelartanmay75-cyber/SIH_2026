@@ -11,7 +11,7 @@ from flask import flash, render_template_string
 from app import create_app
 
 ROOT = Path(__file__).resolve().parents[1]
-BANNER = "APAARSetu &mdash; AICTE Approved Technical Institution Academic Registry &amp; Verification Portal"
+BANNER = "APAARSetu prototype &mdash; synthetic data only. Not connected to AICTE, APAAR, UIDAI or DigiLocker."
 
 
 @pytest.fixture
@@ -71,7 +71,7 @@ def test_role_menus_exactly_match_contract(preview_app, role, labels):
     response = preview_app.test_client().get("/ui-kit", query_string={"role": role})
     assert response.status_code == 200
     html = response.get_data(as_text=True)
-    nav = html.split('<nav aria-label="Main navigation">', 1)[1].split("</nav>", 1)[0]
+    nav = html.split('<nav id="sidebar-menu" aria-label="Main navigation">', 1)[1].split("</nav>", 1)[0]
     assert re.findall(r'title="Available when this module is implemented">([^<]+)</span>', nav) == labels
     # Unbuilt modules must not produce dead anchors.
     assert re.findall(r'href="([^"]+)"', nav) == ["/ui-kit"]

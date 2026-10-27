@@ -17,7 +17,12 @@
     </div>
   </div>
 
-  <div class="dash-sticky-filters">
+  {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}
+  <div id="governance-stats" class="grid grid-4 dash-mb-lg"></div>
+  {% endif %}
+
+  <details class="filter-disclosure dash-sticky-filters">
+    <summary>Filters <span class="muted">— year, institution, programme and status</span></summary>
     <form id="governance-filters" class="filter-bar dash-filter-form">
       <div class="form-row"><label for="dash-year">Academic year</label><select id="dash-year" name="academic_year" class="select"><option value="">All years</option></select></div>
       {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}<div class="form-row"><label for="dash-institution">Institution</label><select id="dash-institution" name="institution_id" class="select"><option value="">All institutions</option></select></div>{% endif %}
@@ -38,11 +43,9 @@
         <div id="dash-active-chips" class="dash-active-chips u-hidden"></div>
       </div>
     </form>
-  </div>
+  </details>
 
   {% if current_user.role in ['AICTE_ADMIN', 'AUDITOR'] %}
-
-  <div id="governance-stats" class="grid grid-4 dash-mb-lg"></div>
 
   <div class="grid grid-2 governance-charts">
 

@@ -22,7 +22,8 @@
   {% if signed_in and self.shell()|trim != 'public-shell' %}
     <aside class="sidebar" aria-label="Application sidebar">
       <div class="brand"><span style="color: #ffffff;">APAAR</span><span style="color: #48bb78;">Setu</span><small>Student data management</small></div>
-      <nav aria-label="Main navigation">{{ navigation(current_user.role, ui_paths|default([])) }}</nav>
+      <button class="sidebar-menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar-menu">Menu</button>
+      <nav id="sidebar-menu" aria-label="Main navigation">{{ navigation(current_user.role, ui_paths|default([])) }}</nav>
       {% if is_ui_preview|default(false) %}<p class="sidebar-note">Development preview.<br>Unbuilt modules are unavailable.</p>{% endif %}
     </aside>
   {% endif %}
@@ -45,7 +46,7 @@
       {% else %}<span>Student data management &amp; verification</span>{% endif %}{% endblock %}
     </header>
     <main class="content" id="main-content" tabindex="-1">{% block content %}{% endblock %}</main>
-    <footer class="footer">{% block footer %}APAARSetu &mdash; AICTE Approved Technical Institution Academic Registry &amp; Verification Portal{% endblock %}</footer>
+    <footer class="footer">{% block footer %}APAARSetu prototype &mdash; synthetic data only. Not connected to AICTE, APAAR, UIDAI or DigiLocker.{% endblock %}</footer>
   </div>
   <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="false" aria-relevant="additions text">
     {% block toast_messages %}{% for category, message in get_flashed_messages(with_categories=true) %}

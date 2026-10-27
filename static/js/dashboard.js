@@ -138,29 +138,32 @@
     const container = get("governance-stats");
     if (!container) return;
     const meta = {
-      "Institutions": { icon: "🏛️", cls: "kpi-navy" },
-      "Student records": { icon: "🎓", cls: "kpi-blue" },
-      "Validated": { icon: "✅", cls: "kpi-green" },
-      "Pending validation": { icon: "⏳", cls: "kpi-amber" },
-      "Active enrolments": { icon: "📚", cls: "kpi-purple" },
-      "Identity conflicts": { icon: "⚠️", cls: "kpi-red" },
-      "Missing / invalid APAAR": { icon: "🔍", cls: "kpi-crimson" },
-      "Capacity ≥ 80%": { icon: "📊", cls: "kpi-sky" },
-      "Capacity ≥ 90%": { icon: "⚠️", cls: "kpi-orange" },
-      "Capacity ≥ 100%": { icon: "🚨", cls: "kpi-darkred" },
-      "Excess attempts": { icon: "🛑", cls: "kpi-red" }
+      "Institutions": { cls: "kpi-navy" },
+      "Student records": { cls: "kpi-blue" },
+      "Validated": { cls: "kpi-green" },
+      "Pending validation": { cls: "kpi-amber" },
+      "Active enrolments": { cls: "kpi-blue" },
+      "Identity conflicts": { cls: "kpi-red" },
+      "Missing / invalid APAAR": { cls: "kpi-red" },
+      "Capacity ≥ 80%": { cls: "kpi-blue" },
+      "Capacity ≥ 90%": { cls: "kpi-amber" },
+      "Capacity ≥ 100%": { cls: "kpi-red" },
+      "Excess attempts": { cls: "kpi-red" }
     };
-    container.replaceChildren(...entries.map(([label, value, hint], idx) => {
-      const m = meta[label] || { icon: "📈", cls: "kpi-navy" };
+    const cards = entries.map(([label, value, hint], idx) => {
+      const m = meta[label] || { cls: "kpi-navy" };
       return N.el("div", { class: `card stat dash-kpi-card ${m.cls}` },
         N.el("div", { class: "dash-kpi-top" },
-          N.el("span", { class: "stat-label" }, label),
-          N.el("span", { class: "dash-kpi-icon", "aria-hidden": "true" }, m.icon)
+          N.el("span", { class: "stat-label" }, label)
         ),
         N.el("div", { class: "stat-number", id: `nat-stat-${idx}` }, N.fmtNumber(value)),
         N.el("div", { class: "stat-trend" }, hint || "System verified")
       );
-    }));
+    });
+    const more = N.el("details", { class: "dash-more-indicators" },
+      N.el("summary", {}, "More indicators"),
+      N.el("div", { class: "grid grid-4" }, cards.slice(4)));
+    container.replaceChildren(...cards.slice(0, 4), more);
   }
 
   function table(id, columns, rows, emptyText) {
