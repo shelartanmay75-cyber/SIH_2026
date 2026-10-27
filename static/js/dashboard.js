@@ -140,17 +140,17 @@
     const container = get("governance-stats");
     if (!container) return;
     const meta = {
-      "Institutions": { cls: "kpi-navy" },
-      "Student records": { cls: "kpi-blue" },
-      "Validated": { cls: "kpi-green" },
-      "Pending validation": { cls: "kpi-amber" },
-      "Active enrolments": { cls: "kpi-blue" },
-      "Identity conflicts": { cls: "kpi-red" },
-      "Missing / invalid APAAR": { cls: "kpi-red" },
-      "Capacity ≥ 80%": { cls: "kpi-blue" },
-      "Capacity ≥ 90%": { cls: "kpi-amber" },
-      "Capacity ≥ 100%": { cls: "kpi-red" },
-      "Excess attempts": { cls: "kpi-red" }
+      "Institutions": { cls: "kpi-navy", hint: "In the selected view" },
+      "Student records": { cls: "kpi-blue", hint: "Synthetic records" },
+      "Validated": { cls: "kpi-green", hint: "Valid status" },
+      "Pending validation": { cls: "kpi-amber", hint: "Awaiting checks" },
+      "Active enrolments": { cls: "kpi-blue", hint: "Currently active" },
+      "Identity conflicts": { cls: "kpi-red", hint: "For human review" },
+      "Missing / invalid APAAR": { cls: "kpi-red", hint: "Format issues" },
+      "Capacity ≥ 80%": { cls: "kpi-blue", hint: "Institutions at threshold" },
+      "Capacity ≥ 90%": { cls: "kpi-amber", hint: "Institutions at threshold" },
+      "Capacity ≥ 100%": { cls: "kpi-red", hint: "Institutions at threshold" },
+      "Excess attempts": { cls: "kpi-red", hint: "Rejected admissions" }
     };
     const cards = entries.map(([label, value, hint], idx) => {
       const m = meta[label] || { cls: "kpi-navy" };
@@ -159,13 +159,10 @@
           N.el("span", { class: "stat-label" }, label)
         ),
         N.el("div", { class: "stat-number", id: `nat-stat-${idx}` }, N.fmtNumber(value)),
-        N.el("div", { class: "stat-trend" }, hint || "System verified")
+        N.el("div", { class: "stat-trend" }, hint || m.hint)
       );
     });
-    const more = N.el("details", { class: "dash-more-indicators" },
-      N.el("summary", {}, "More indicators"),
-      N.el("div", { class: "grid grid-4" }, cards.slice(4)));
-    container.replaceChildren(...cards.slice(0, 4), more);
+    container.replaceChildren(...cards);
   }
 
   /** One prominent, filter-aware chart with a readable text equivalent. */

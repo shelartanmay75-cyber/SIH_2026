@@ -236,26 +236,23 @@ dialog .actions { justify-content: flex-end; }
 #credential-screen > .card { margin-top: 16px; }
 #sharing-screen > .card, #sharing-form { margin-top: 16px; }
 .governance-charts, .governance-lists { margin-top: 24px; }
-.dashboard-first-view { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(330px, .95fr); gap: 16px; margin-top: 16px; align-items: stretch; }
-.dashboard-overview { display: grid; grid-template-rows: auto minmax(230px, 1fr) auto; gap: 12px; }
+.dashboard-first-view { margin-top: 16px; }
+.dashboard-overview { display: grid; grid-template-rows: auto 300px auto; gap: 16px; }
 .dashboard-overview-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .dashboard-overview-heading p { margin-top: 4px; }
 .dashboard-metric-switch { display: flex; flex-wrap: wrap; gap: 4px; }
 .dashboard-metric-switch .btn { padding: 6px 10px; font-size: .85rem; min-height: 32px; }
 .dashboard-metric-switch [aria-pressed="true"] { background: var(--navy); color: #fff; }
-.dashboard-overview-chart { position: relative; height: 260px; min-width: 0; }
+.dashboard-overview-chart { position: relative; min-width: 0; }
 .dashboard-overview-chart > p { position: absolute; inset: 45% 0 auto; text-align: center; color: var(--muted); }
 .dashboard-overview-summary { border-top: 1px solid var(--border); padding-top: 10px; color: var(--muted); overflow-wrap: anywhere; }
-.dashboard-primary-stats { margin: 0 !important; gap: 12px; align-content: start; }
-.dashboard-primary-stats .dash-kpi-card { min-height: 112px; }
+.dashboard-indicators { margin-top: 24px; }
+.dashboard-section-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; margin-bottom: 12px; }
+.dashboard-primary-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.dashboard-primary-stats .dash-kpi-card { min-height: 116px; }
 .dashboard-primary-stats .stat-number { font-size: 1.65rem; }
 .dashboard-primary-stats .stat-trend { font-size: .8rem; }
-.dashboard-primary-stats .dash-more-indicators { grid-column: 1 / -1; }
 .governance-charts .chart-frame { position: relative; height: 260px; margin-top: 16px; }
-#governance-stats { margin-top: 16px; }
-.dash-more-indicators { grid-column: 1 / -1; }
-.dash-more-indicators > summary { color: var(--navy); cursor: pointer; font-weight: 650; padding: 8px 0; }
-.dash-more-indicators > .grid { margin-top: 12px; }
 #governance-filters { margin-top: 16px; }
 #governance-filters .form-row { min-width: 145px; }
 .sharing-options { border: 1px solid var(--border); padding: 16px; margin: 16px 0; }
@@ -268,8 +265,8 @@ dialog .actions { justify-content: flex-end; }
 #risk-score-table tfoot th, #risk-score-table tfoot td { position: sticky; top: auto; bottom: 0; background: var(--surface); border-top: 2px solid var(--border); }
 #risk-score-table tfoot td:nth-child(2) { white-space: nowrap; }
 @media (max-width: 1100px) { .risk-status-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 1150px) { .dashboard-first-view { grid-template-columns: 1fr; } .dashboard-primary-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (max-width: 760px) { .dashboard-primary-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dashboard-overview-heading { display: block; } .dashboard-metric-switch { margin-top: 12px; } }
+@media (max-width: 1100px) { .dashboard-primary-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .dashboard-primary-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dashboard-overview { grid-template-rows: auto 260px auto; } .dashboard-overview-heading { display: block; } .dashboard-metric-switch { margin-top: 12px; } }
 @media (max-width: 899px) { .risk-detail-grid { grid-template-columns: 1fr; } .risk-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 @media (max-width: 1199px) {
@@ -1305,4 +1302,23 @@ dialog .actions { justify-content: flex-end; }
   color: var(--muted);
   margin-top: 4px;
 }
+
+/* Quiet hover feedback throughout the signed-in portal. */
+body:not(.public-shell) .content .card:hover:not(.dash-kpi-card) {
+  border-color: #aebdcd;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+body:not(.public-shell) .content .dash-kpi-card:hover {
+  transform: none;
+  background: #fbfcfe;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+body:not(.public-shell) .content .table tbody tr:hover { background: #edf3f8; }
+body:not(.public-shell) .content a:not(.btn):hover { color: var(--info); text-decoration: underline; }
+body:not(.public-shell) .content summary:hover { color: var(--info); background: var(--muted-bg); }
+body:not(.public-shell) .content .tabs a:hover,
+body:not(.public-shell) .content .tabs button:hover { color: var(--navy); background: var(--muted-bg); }
+body:not(.public-shell) .content .input:hover:not(:disabled),
+body:not(.public-shell) .content .select:hover:not(:disabled),
+body:not(.public-shell) .content .textarea:hover:not(:disabled) { border-color: var(--navy); }
 
