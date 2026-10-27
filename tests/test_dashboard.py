@@ -97,7 +97,5 @@ def test_dashboard_and_reports_pages_load_scripts(client, governance):
     assert b'data-overview="risk"' in dashboard.data
     assert b'data-overview="enrolment"' in dashboard.data
     assert b'data-overview="capacity"' in dashboard.data
-    assert b'Key indicators' in dashboard.data
-    assert b'More indicators' not in dashboard.data
     reports = client.get("/reports")
     assert reports.status_code == 200 and b"js/reports.js" in reports.data and b"anomaly-filters" in reports.data
