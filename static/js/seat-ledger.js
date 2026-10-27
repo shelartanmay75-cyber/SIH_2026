@@ -180,20 +180,40 @@
       utilBadge.textContent = "Capacity Available";
     }
 
-    // Category Breakdown Table: Open (Regular) and Supernumerary only
-    const regularCount = s.regular_admitted ?? 0;
-    const supernumeraryCount = s.supernumerary_admitted ?? 0;
+    // Category Breakdown Table: Full dynamic breakdown for OPEN, OBC, SC, ST, NRI, OCI, FN
+    const catQuotas = s.category_quotas || {
+      "OPEN": 90, "OBC": 50, "SC": 24, "ST": 16,
+      "NRI": 6, "OCI": 5, "FN": 4
+    };
+    const catBreakdown = s.category_breakdown || {};
+    const categoriesMeta = [
+      { key: "OPEN", label: "OPEN (Regular)", isSuper: false },
+      { key: "OBC", label: "OBC (Regular)", isSuper: false },
+      { key: "SC", label: "SC (Regular)", isSuper: false },
+      { key: "ST", label: "ST (Regular)", isSuper: false },
+      { key: "NRI", label: "NRI Category (Supernumerary)", isSuper: true },
+      { key: "OCI", label: "OCI Status (Supernumerary)", isSuper: true },
+      { key: "FN", label: "Foreign National (Supernumerary)", isSuper: true },
+    ];
 
-    const rowsHtml = `
-      <tr>
-        <td><strong>Open (Regular)</strong></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; font-weight: bold; color: var(--navy);">${regularCount}</td>
-      </tr>
-      <tr>
-        <td><strong>Supernumerary</strong></td>
-        <td style="text-align: right; font-variant-numeric: tabular-nums; font-weight: bold; color: #7c3aed;">${supernumeraryCount}</td>
-      </tr>
-    `;
+    const rowsHtml = categoriesMeta.map(c => {
+      const admitted = catBreakdown[c.key] ?? 0;
+      const quota = catQuotas[c.key] ?? "—";
+      const pct = typeof quota === "number" && quota > 0 ? ((admitted / quota) * 100).toFixed(1) : "—";
+      const badgeClass = c.isSuper ? "badge-warn" : "badge-info";
+      return `
+        <tr>
+          <td>
+            <strong>${escapeHTML(c.label)}</strong>
+          </td>
+          <td style="text-align: right; font-variant-numeric: tabular-nums;">
+            <span style="font-weight: 600; color: ${c.isSuper ? '#7c3aed' : 'var(--navy)'};">${admitted}</span>
+            <span style="color: var(--muted); font-size: 12px;"> / ${quota}</span>
+            <span class="badge ${badgeClass}" style="margin-left: 8px; font-size: 11px;">${pct}%</span>
+          </td>
+        </tr>
+      `;
+    }).join("");
 
     catTbody.innerHTML = rowsHtml;
 
@@ -208,7 +228,7 @@
     btnCommitAdmission.className = "btn";
   }
 
-  // Pre-fill demo values helper: VESIT / B.Tech IT / 2026-27 (116/120 occupied)
+  // Pre-fill demo values helper: VESIT / B.Tech IT / 2026-27 (90/180 regular occupied, 50% half-filled)
   function fillDemoValues() {
     // Select 2026-27
     selectYear.value = "2026-27";
@@ -232,8 +252,8 @@
         loadAdmissionEvents(1);
       }
 
-      // Generate next student ID above 32
-      const nextRoll = 33;
+      // Generate next student ID above 98
+      const nextRoll = 99;
       inputStudentId.value = `VESIT-26-BTECH-IT-${String(nextRoll).padStart(4, "0")}`;
       inputFullName.value = "Kavya Deshmukh";
       inputApaar.value = "912345678999";
@@ -243,7 +263,7 @@
       if (checkOci) checkOci.checked = false;
       if (checkFn) checkFn.checked = false;
 
-      toast("Demo values loaded for VESIT B.Tech IT (2026-27). Remaining regular seats: 30.", "info");
+      toast("Demo values loaded for VESIT B.Tech IT (2026-27). Remaining regular seats: 90 / 180 (50.0% utilised).", "info");
       resetPrecheckState();
     });
   }
@@ -251,11 +271,8 @@
   // Category and classification sync
   if (selectCategory && selectClassification) {
     selectCategory.addEventListener("change", () => {
-      if (selectCategory.value === "SUPERNUMERARY") {
-        selectClassification.value = "SUPERNUMERARY";
-      } else {
-        selectClassification.value = "REGULAR";
-      }
+      const isSuper = ["SUPERNUMERARY", "NRI", "OCI", "FN"].includes(selectCategory.value);
+      selectClassification.value = isSuper ? "SUPERNUMERARY" : "REGULAR";
     });
   }
 
@@ -264,7 +281,8 @@
     const prog = currentProgrammes.find(p => p.programme_id === selectProg.value);
     const instId = prog?.institution_id || selectInst.value;
     const cat = selectCategory?.value || "OPEN";
-    const classificationVal = selectClassification?.value || (cat === "SUPERNUMERARY" ? "SUPERNUMERARY" : "REGULAR");
+    const isSuperCat = ["SUPERNUMERARY", "NRI", "OCI", "FN"].includes(cat);
+    const classificationVal = selectClassification?.value || (isSuperCat ? "SUPERNUMERARY" : "REGULAR");
 
     return {
       institution_id: instId,
@@ -275,9 +293,9 @@
       apaar_ref: inputApaar.value.trim() || null,
       admission_category: cat,
       classification: classificationVal,
-      is_nri: (cat === "SUPERNUMERARY" || Boolean(checkNri?.checked)),
-      is_oci: Boolean(checkOci?.checked),
-      is_foreign_national: Boolean(checkFn?.checked)
+      is_nri: (cat === "NRI" || cat === "SUPERNUMERARY" || Boolean(checkNri?.checked)),
+      is_oci: (cat === "OCI" || Boolean(checkOci?.checked)),
+      is_foreign_national: (cat === "FN" || Boolean(checkFn?.checked))
     };
   }
 

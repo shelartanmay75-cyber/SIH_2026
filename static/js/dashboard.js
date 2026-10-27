@@ -573,7 +573,15 @@
       {
         label: "Admitted Students",
         data: catAdmitted,
-        backgroundColor: ["#2563eb", "#7c3aed"],
+        backgroundColor: [
+          "#2563eb",
+          "#0284c7",
+          "#059669",
+          "#d97706",
+          "#7c3aed",
+          "#9333ea",
+          "#c026d3"
+        ],
         borderRadius: 4
       }
     ], {
@@ -707,9 +715,18 @@
     chart("chart-risk", "bar", severity, [{ label: "Cases", data: severity.map(key => data.risk_cases_by_severity[key] || 0), backgroundColor: [colors.green, "#f59e0b", "#ea580c", "#dc2626"] }],
       { xTitle: "Risk severity", yTitle: "Cases", onClick: (_, active) => { if (active.length) window.location.assign(`/risk-cases?severity=${encodeURIComponent(severity[active[0].index])}`); } });
     const catEnrol = data.category_wise_enrolment || {};
-    const openStudents = catEnrol["OPEN"] || 0;
-    const supernumeraryStudents = Object.entries(catEnrol).filter(([k]) => k !== "OPEN").reduce((acc, [, v]) => acc + v, 0);
-    chart("chart-category", "bar", ["Open (Regular)", "Supernumerary"], [{ label: "Students", data: [openStudents, supernumeraryStudents], backgroundColor: ["#2563eb", "#7c3aed"] }], { xTitle: "Admission quota / category", yTitle: "Students" });
+    const catLabels = ["OPEN", "OBC", "SC", "ST", "NRI", "OCI", "FN"];
+    const catData = catLabels.map(cat => catEnrol[cat] || 0);
+    const catColors = [
+      "#2563eb",
+      "#0284c7",
+      "#059669",
+      "#d97706",
+      "#7c3aed",
+      "#9333ea",
+      "#c026d3"
+    ];
+    chart("chart-category", "bar", catLabels, [{ label: "Enrolled Students", data: catData, backgroundColor: catColors, borderRadius: 4 }], { xTitle: "Admission quota / category", yTitle: "Students" });
     const years = [...new Set(data.institution_admission_trend.map(row => row.academic_year))].sort();
     const codes = [...new Set(data.institution_admission_trend.map(row => row.institution))].sort();
     chart("chart-trend", "line", years, codes.map((code, index) => ({ label: code,

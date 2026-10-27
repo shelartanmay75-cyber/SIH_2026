@@ -157,10 +157,10 @@ def test_seed_students_exact_scenario_counts(app):
         student_count = seed_students(db, random.Random(42))
 
         assert student_count >= 150
-        assert student_count == 216
+        assert student_count == 609
 
         # All records marked synthetic
-        assert StudentRecord.query.filter_by(is_synthetic=True).count() == 216
+        assert StudentRecord.query.filter_by(is_synthetic=True).count() == 609
 
         # Scenario 1: VESIT B.Tech IT 2026-27
         vesit = Institution.query.filter_by(code="VESIT").first()
@@ -175,25 +175,25 @@ def test_seed_students_exact_scenario_counts(app):
         regular_students = [s for s in vesit_it_students if s.classification == Classification.REGULAR.value]
         supernumerary_students = [s for s in vesit_it_students if s.classification == Classification.SUPERNUMERARY.value]
 
-        assert len(regular_students) == 30
-        assert len(supernumerary_students) == 2
+        assert len(regular_students) == 90
+        assert len(supernumerary_students) == 8
 
-        # Supernumerary category: SUPERNUMERARY
+        # Supernumerary categories: NRI, OCI, FN
         categories = {s.admission_category for s in supernumerary_students}
-        assert "SUPERNUMERARY" in categories
+        assert {"NRI", "OCI", "FN"}.issubset(categories)
 
         cap = IntakeCapacity.query.filter_by(
             institution_id=vesit.id,
             programme_id=btech_it.id,
             academic_year="2026-27"
         ).first()
-        assert cap.approved_regular_intake == 60
-        assert cap.supernumerary_capacity == 5
-        assert cap.approved_regular_intake - len(regular_students) == 30
-        assert cap.supernumerary_capacity - len(supernumerary_students) == 3
+        assert cap.approved_regular_intake == 180
+        assert cap.supernumerary_capacity == 15
+        assert cap.approved_regular_intake - len(regular_students) == 90
+        assert cap.supernumerary_capacity - len(supernumerary_students) == 7
 
         # Scenario 2 & 3: Half-filled capacity across all 3 institutions
-        # COEP Diploma Mech: 30 Regular + 2 Supernumerary
+        # COEP Diploma Mech: 90 Regular + 7 Supernumerary = 97
         coep = Institution.query.filter_by(code="COEP").first()
         dip_mech = Programme.query.filter_by(institution_id=coep.id, code="DIP-MECH").first()
         dip_mech_students = StudentRecord.query.filter_by(
@@ -206,10 +206,10 @@ def test_seed_students_exact_scenario_counts(app):
             programme_id=dip_mech.id,
             academic_year="2026-27"
         ).first()
-        assert len([s for s in dip_mech_students if s.classification == Classification.REGULAR.value]) == 30
-        assert dip_mech_cap.approved_regular_intake == 60
+        assert len([s for s in dip_mech_students if s.classification == Classification.REGULAR.value]) == 90
+        assert dip_mech_cap.approved_regular_intake == 180
 
-        # VESIT B.Tech CE: 30 regular seats admitted (50% utilised)
+        # VESIT B.Tech CE: 90 regular seats admitted (50% utilised)
         vesit_ce = Programme.query.filter_by(institution_id=vesit.id, code="BTECH-CE").first()
         vesit_ce_students = StudentRecord.query.filter_by(
             institution_id=vesit.id,
@@ -221,19 +221,19 @@ def test_seed_students_exact_scenario_counts(app):
             programme_id=vesit_ce.id,
             academic_year="2026-27"
         ).first()
-        assert len([s for s in vesit_ce_students if s.classification == Classification.REGULAR.value]) == 30
-        assert vesit_ce_cap.approved_regular_intake == 60
+        assert len([s for s in vesit_ce_students if s.classification == Classification.REGULAR.value]) == 90
+        assert vesit_ce_cap.approved_regular_intake == 180
 
-        # COEP B.Tech CE: 30 regular + 2 supernumerary = 32
+        # COEP B.Tech CE: 90 regular + 8 supernumerary = 98
         coep_ce = Programme.query.filter_by(institution_id=coep.id, code="BTECH-CE").first()
         coep_ce_count = StudentRecord.query.filter_by(
             institution_id=coep.id,
             programme_id=coep_ce.id,
             academic_year="2026-27"
         ).count()
-        assert coep_ce_count == 32
+        assert coep_ce_count == 98
 
-        # VJTI B.Tech EXTC: 30 regular + 2 supernumerary = 32
+        # VJTI B.Tech EXTC: 90 regular + 7 supernumerary = 97
         vjti = Institution.query.filter_by(code="VJTI").first()
         vjti_extc = Programme.query.filter_by(institution_id=vjti.id, code="BTECH-EXTC").first()
         vjti_extc_count = StudentRecord.query.filter_by(
@@ -241,16 +241,16 @@ def test_seed_students_exact_scenario_counts(app):
             programme_id=vjti_extc.id,
             academic_year="2026-27"
         ).count()
-        assert vjti_extc_count == 32
+        assert vjti_extc_count == 97
 
-        # VJTI B.Tech IT: 30 regular + 2 supernumerary = 32
+        # VJTI B.Tech IT: 90 regular + 8 supernumerary = 98
         vjti_it = Programme.query.filter_by(institution_id=vjti.id, code="BTECH-IT").first()
         vjti_it_count = StudentRecord.query.filter_by(
             institution_id=vjti.id,
             programme_id=vjti_it.id,
             academic_year="2026-27"
         ).count()
-        assert vjti_it_count == 32
+        assert vjti_it_count == 98
 
         # Scenario 3: Past rejected excess admission attempts
         rejected_events = AdmissionEvent.query.filter_by(

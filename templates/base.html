@@ -9,9 +9,6 @@
   <meta name="nexus-api-routes" content="{{ ui_paths|default([])|list|sort|tojson|forceescape }}">
   <title>{% block title %}APAARSetu{% endblock %}</title>
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   {% block head %}{% endblock %}
 </head>
