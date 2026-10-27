@@ -236,6 +236,21 @@ dialog .actions { justify-content: flex-end; }
 #credential-screen > .card { margin-top: 16px; }
 #sharing-screen > .card, #sharing-form { margin-top: 16px; }
 .governance-charts, .governance-lists { margin-top: 24px; }
+.dashboard-first-view { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(330px, .95fr); gap: 16px; margin-top: 16px; align-items: stretch; }
+.dashboard-overview { display: grid; grid-template-rows: auto minmax(230px, 1fr) auto; gap: 12px; }
+.dashboard-overview-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.dashboard-overview-heading p { margin-top: 4px; }
+.dashboard-metric-switch { display: flex; flex-wrap: wrap; gap: 4px; }
+.dashboard-metric-switch .btn { padding: 6px 10px; font-size: .85rem; min-height: 32px; }
+.dashboard-metric-switch [aria-pressed="true"] { background: var(--navy); color: #fff; }
+.dashboard-overview-chart { position: relative; height: 260px; min-width: 0; }
+.dashboard-overview-chart > p { position: absolute; inset: 45% 0 auto; text-align: center; color: var(--muted); }
+.dashboard-overview-summary { border-top: 1px solid var(--border); padding-top: 10px; color: var(--muted); overflow-wrap: anywhere; }
+.dashboard-primary-stats { margin: 0 !important; gap: 12px; align-content: start; }
+.dashboard-primary-stats .dash-kpi-card { min-height: 112px; }
+.dashboard-primary-stats .stat-number { font-size: 1.65rem; }
+.dashboard-primary-stats .stat-trend { font-size: .8rem; }
+.dashboard-primary-stats .dash-more-indicators { grid-column: 1 / -1; }
 .governance-charts .chart-frame { position: relative; height: 260px; margin-top: 16px; }
 #governance-stats { margin-top: 16px; }
 .dash-more-indicators { grid-column: 1 / -1; }
@@ -253,6 +268,8 @@ dialog .actions { justify-content: flex-end; }
 #risk-score-table tfoot th, #risk-score-table tfoot td { position: sticky; top: auto; bottom: 0; background: var(--surface); border-top: 2px solid var(--border); }
 #risk-score-table tfoot td:nth-child(2) { white-space: nowrap; }
 @media (max-width: 1100px) { .risk-status-counts { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1150px) { .dashboard-first-view { grid-template-columns: 1fr; } .dashboard-primary-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .dashboard-primary-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .dashboard-overview-heading { display: block; } .dashboard-metric-switch { margin-top: 12px; } }
 @media (max-width: 899px) { .risk-detail-grid { grid-template-columns: 1fr; } .risk-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 @media (max-width: 1199px) {

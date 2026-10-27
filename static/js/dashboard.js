@@ -23,6 +23,8 @@
   };
   let institutions = [];
   let programmesMap = new Map();
+  let overviewMode = "risk";
+  let overviewData = null;
   const current = () => Object.fromEntries([...new FormData(filters)].filter(([, value]) => value !== ""));
   const cell = (text, href) => href ? N.el("a", { href }, text) : N.el("span", {}, text);
 
@@ -164,6 +166,53 @@
       N.el("summary", {}, "More indicators"),
       N.el("div", { class: "grid grid-4" }, cards.slice(4)));
     container.replaceChildren(...cards.slice(0, 4), more);
+  }
+
+  /** One prominent, filter-aware chart with a readable text equivalent. */
+  function renderOverview(data) {
+    overviewData = data;
+    const buttons = [...root.querySelectorAll("[data-overview]")];
+    buttons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.overview === overviewMode)));
+    const configurations = {
+      risk: {
+        labels: ["Low", "Medium", "High", "Critical"],
+        values: ["LOW", "MEDIUM", "HIGH", "CRITICAL"].map(level => data.risk_cases_by_severity[level] || 0),
+        colors: [colors.green, colors.warnInk, colors.orange, colors.red],
+        unit: "Cases",
+        href: index => `/risk-cases?severity=${["LOW", "MEDIUM", "HIGH", "CRITICAL"][index]}`
+      },
+      enrolment: {
+        labels: Object.keys(data.category_wise_enrolment || {}),
+        values: Object.values(data.category_wise_enrolment || {}),
+        colors: [colors.navy, colors.blue, colors.teal, colors.green],
+        unit: "Students",
+        href: () => "/students"
+      },
+      capacity: {
+        labels: data.capacity_utilisation.map(row => row.code),
+        values: data.capacity_utilisation.map(row => row.percent),
+        colors: data.capacity_utilisation.map(row => row.percent >= 100 ? colors.red : row.percent >= 90 ? colors.warnInk : colors.blue),
+        unit: "Utilisation %",
+        href: () => "/seat-ledger"
+      }
+    };
+    const selected = configurations[overviewMode];
+    const loading = get("overview-loading");
+    if (loading) loading.hidden = true;
+    get("overview-summary").textContent = selected.labels.length
+      ? selected.labels.map((label, index) => `${label}: ${overviewMode === "capacity" ? Number(selected.values[index]).toFixed(1) : N.fmtNumber(selected.values[index])}${overviewMode === "capacity" ? "%" : ""}`).join(" · ")
+      : "No data matches the selected filters.";
+    chart("chart-overview", "bar", selected.labels, [{
+      label: selected.unit, data: selected.values,
+      backgroundColor: selected.labels.map((_, index) => selected.colors[index % selected.colors.length]),
+      borderRadius: 4, maxBarThickness: 42
+    }], {
+      indexAxis: "y",
+      scales: { x: { beginAtZero: true, grid: { color: "#e5eaf0" }, title: { display: true, text: selected.unit } },
+        y: { grid: { display: false } } },
+      onHover: (_event, active) => { get("chart-overview").style.cursor = active.length ? "pointer" : "default"; },
+      onClick: (_event, active) => { if (active.length) window.location.assign(selected.href(active[0].index)); }
+    });
   }
 
   function table(id, columns, rows, emptyText) {
@@ -702,6 +751,7 @@
   /** National view remains unchanged for AICTE admins and auditors. */
   function renderNational(data) {
     const t = data.totals;
+    renderOverview(data);
     stats([["Institutions", t.institutions], ["Student records", t.student_records], ["Validated", t.validated],
       ["Pending validation", t.pending_validations], ["Active enrolments", t.active_enrolments], ["Identity conflicts", t.identity_conflicts],
       ["Missing / invalid APAAR", t.missing_invalid_apaar], ["Capacity ≥ 80%", t.capacity_80],
@@ -712,14 +762,20 @@
     const catEnrol = data.category_wise_enrolment || {};
     const openStudents = catEnrol["OPEN"] || 0;
     const supernumeraryStudents = Object.entries(catEnrol).filter(([k]) => k !== "OPEN").reduce((acc, [, v]) => acc + v, 0);
-    chart("chart-category", "bar", ["Open (Regular)", "Supernumerary"], [{ label: "Students", data: [openStudents, supernumeraryStudents], backgroundColor: ["#2563eb", "#7c3aed"] }], { xTitle: "Admission quota / category", yTitle: "Students" });
+    chart("chart-category", "bar", ["Open (Regular)", "Supernumerary"], [{ label: "Students", data: [openStudents, supernumeraryStudents], backgroundColor: [colors.navy, colors.teal] }],
+      { xTitle: "Admission quota / category", yTitle: "Students", onHover: (_, active) => { get("chart-category").style.cursor = active.length ? "pointer" : "default"; },
+        onClick: (_, active) => { if (active.length) window.location.assign("/students"); } });
     const years = [...new Set(data.institution_admission_trend.map(row => row.academic_year))].sort();
     const codes = [...new Set(data.institution_admission_trend.map(row => row.institution))].sort();
     chart("chart-trend", "line", years, codes.map((code, index) => ({ label: code,
       data: years.map(year => data.institution_admission_trend.find(row => row.academic_year === year && row.institution === code)?.admissions || 0),
-      borderColor: ["#2563eb", "#ea580c", "#10b981", "#7c3aed"][index % 4], tension: 0 })), { xTitle: "Academic year", yTitle: "Admissions" });
+      borderColor: [colors.navy, colors.teal, colors.green, colors.orange][index % 4], tension: 0.2, pointRadius: 4, pointHoverRadius: 7 })),
+      { xTitle: "Academic year", yTitle: "Admissions", onHover: (_, active) => { get("chart-trend").style.cursor = active.length ? "pointer" : "default"; },
+        onClick: (_, active) => { if (active.length) window.location.assign("/institutions"); } });
     chart("chart-capacity", "bar", data.capacity_utilisation.map(row => row.code), [{ label: "Utilisation %", data: data.capacity_utilisation.map(row => row.percent),
-      backgroundColor: data.capacity_utilisation.map(row => row.percent >= 100 ? "#ef4444" : row.percent >= 90 ? "#f59e0b" : row.percent >= 80 ? "#3b82f6" : "#10b981") }], { xTitle: "Institution", yTitle: "Utilisation %" });
+      backgroundColor: data.capacity_utilisation.map(row => row.percent >= 100 ? colors.red : row.percent >= 90 ? colors.warnInk : row.percent >= 80 ? colors.blue : colors.green) }],
+      { xTitle: "Institution", yTitle: "Utilisation %", onHover: (_, active) => { get("chart-capacity").style.cursor = active.length ? "pointer" : "default"; },
+        onClick: (_, active) => { if (active.length) window.location.assign("/seat-ledger"); } });
     table("capacity-list", [{ key: "name", label: "Institution" }, { key: "percent", label: "Utilisation", render: value => N.badge(`${value}%`, value >= 100 ? "danger" : value >= 90 ? "warn" : "info") }],
       data.capacity_utilisation.filter(row => row.percent >= 80), "No institution has reached 80% of its selected capacity.");
     table("high-cases", [{ key: "reference", label: "Case", render: (value, row) => cell(value, `/risk-cases/${encodeURIComponent(row.id)}`) },
@@ -821,6 +877,11 @@
     void refresh();
   });
 
+  root.querySelectorAll("[data-overview]").forEach(button => button.addEventListener("click", () => {
+    overviewMode = button.dataset.overview;
+    if (overviewData) renderOverview(overviewData);
+  }));
+
   get("dash-reset").addEventListener("click", () => {
     filters.reset();
     void refresh();
@@ -828,8 +889,13 @@
 
   void (async () => {
     try {
-      await loadOptions();
-      await refresh();
+      if (national) {
+        void loadOptions().catch(error => N.toast(error.message || "Filter options are unavailable.", "warn"));
+        await refresh();
+      } else {
+        await loadOptions();
+        await refresh();
+      }
     } catch (error) {
       if (get("governance-status")) get("governance-status").textContent = error.message;
       N.toast(error.message, "danger");
